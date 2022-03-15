@@ -1,5 +1,5 @@
-@import  "~bootstrap/scss/bootstrap" ;
+$theme-colors: (
+  'primary': #343a40,
+);
 
-body {
- background-color: burlywood;
-}
+@import '~bootstrap/scss/bootstrap';
