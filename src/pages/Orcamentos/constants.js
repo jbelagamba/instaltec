@@ -1,50 +1,59 @@
-import { Tag, Space } from 'antd';
+import { Tag } from 'antd';
 
 export const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    title: 'Nº Orçamento',
+    dataIndex: 'numero_orcamento',
+    key: 'numero_orcamento',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Cliente',
+    dataIndex: 'cliente',
+    key: 'cliente',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Representante',
+    dataIndex: 'representante',
+    key: 'representante',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
+    title: 'Representante',
+    dataIndex: 'representante',
+    key: 'representante',
+  },
+  {
+    title: 'Titulo orçamento',
+    dataIndex: 'titulo_orcamento',
+    key: 'titulo_orcamento',
+  },
+  {
+    title: 'Data envio',
+    dataIndex: 'data_envio',
+    key: 'data_envio',
+  },
+  {
+    title: 'Valor proposta',
+    dataIndex: 'valor_proposta',
+    key: 'valor_proposta',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (tag) => (
+      <Tag
+        color={
+          tag === 'Enviado' ? 'green' : tag === 'Reprovado' ? 'red' : 'geekblue'
+        }
+        key={tag}
+      >
+        {tag}
+      </Tag>
     ),
   },
   {
-    title: 'Action',
-    key: 'action',
-    render: (text, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
+    title: 'Forma de aceite',
+    dataIndex: 'forma_aceite',
+    key: 'forma_aceite',
   },
 ];
