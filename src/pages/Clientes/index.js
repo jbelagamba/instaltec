@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getToken } from '../../services/auth';
 import axios from 'axios';
 import {
@@ -63,11 +63,37 @@ function Clientes() {
   };
 
   const getClientes = async () => {
-    const { data } = await axios.get(
-      `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente&token=${getToken()}`
-    );
-    console.log('data', data);
+    setLoadingClientes(true);
+    try {
+      const { data } = await axios.get(
+        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente&token=${getToken()}`
+      );
+
+      setClientes(() =>
+        data.map(({ id_client, name, cpf_cnpj, email, phone }) => ({
+          key: id_client,
+          codigo_cliente: id_client,
+          nome: name,
+          cnpj_cpf: cpf_cnpj,
+          email: email,
+          telefone: phone,
+          acoes: {
+            id: id_client,
+            deletarCliente,
+            gerarOrcamento,
+          },
+        }))
+      );
+    } catch (error) {
+      message.error('Não foi possível carregar a lista de clientes!');
+    } finally {
+      setLoadingClientes(false);
+    }
   };
+
+  useEffect(() => {
+    getClientes();
+  }, []);
 
   return (
     <Content className="container whiteBox">
@@ -86,8 +112,6 @@ function Clientes() {
       />
 
       <Divider />
-
-      <button onClick={getClientes}>teste</button>
 
       {clientes && (
         <Table
