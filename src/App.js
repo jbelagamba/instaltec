@@ -1,18 +1,29 @@
 import { Routes, Route } from 'react-router-dom';
-import { isAuthenticated } from './services/auth';
+import { isAuthenticated, logout } from './services/auth';
 import './index.scss';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Clientes from './pages/Clientes';
+import { UserOutlined } from '@ant-design/icons';
 
-import { PageHeader, Layout } from 'antd';
+import { PageHeader, Layout, Button } from 'antd';
 const { Footer } = Layout;
 
 function App() {
   return (
     <Layout className="layout">
-      <PageHeader className="pageReader" title="Instaltec" />
+      <PageHeader
+        title="Instaltec"
+        className="pageReader"
+        extra={
+          isAuthenticated() && (
+            <Button onClick={() => logout()}>
+              <UserOutlined /> Sair
+            </Button>
+          )
+        }
+      />
 
       <Routes>
         {isAuthenticated() ? (
