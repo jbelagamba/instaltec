@@ -24,6 +24,11 @@ function Clientes() {
   const onFinish = (values) => {
     setLoadingCadastro(true);
 
+    const dadosCadastrais = {
+      ...values,
+      key: Math.random(),
+    };
+
     setTimeout(() => {
       setLoadingCadastro(false);
       setLoadingClientes(true);
@@ -32,9 +37,7 @@ function Clientes() {
     }, 1000);
 
     setTimeout(() => {
-      var novallista = clientes;
-      novallista.push(values);
-      setClientes(() => novallista);
+      setClientes((clientes) => [...clientes, dadosCadastrais]);
       setLoadingClientes(false);
     }, 2000);
   };
@@ -79,46 +82,48 @@ function Clientes() {
           layout="vertical"
         >
           <Form.Item
-            label="key"
-            name="key"
-            rules={[{ required: true, message: 'Informe o key!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Código cliente"
+            label="Código do cliente"
             name="codigo_cliente"
-            rules={[{ required: true, message: 'Informe o Nome cliente!' }]}
+            rules={[
+              { required: true, message: 'Informe o código do cliente!' },
+            ]}
           >
-            <Input />
+            <Input placeholder="Digite o código do cliente" />
           </Form.Item>
           <Form.Item
             label="Nome cliente"
             name="nome"
-            rules={[{ required: true, message: 'Informe o Nome cliente!' }]}
+            rules={[{ required: true, message: 'Informe o nome cliente!' }]}
           >
-            <Input />
+            <Input placeholder="Digite o nome do cliente" />
           </Form.Item>
           <Form.Item
             label="Representante"
             name="representante"
-            rules={[{ required: true, message: 'Informe o Representante!' }]}
+            rules={[
+              {
+                required: true,
+                message: 'Informe o representante do cliente!',
+              },
+            ]}
           >
-            <Input />
+            <Input placeholder="Digite o representante" />
           </Form.Item>
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: 'Informe o Email!' }]}
+            rules={[{ required: true, message: 'Informe o email do cliente!' }]}
           >
-            <Input />
+            <Input placeholder="Digite o email" />
           </Form.Item>
           <Form.Item
             label="Telefone"
             name="telefone"
-            rules={[{ required: true, message: 'Informe o Telefone!' }]}
+            rules={[
+              { required: true, message: 'Informe o telefone do cliente!' },
+            ]}
           >
-            <Input />
+            <Input placeholder="Digite o telefone" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loadingCadastro}>

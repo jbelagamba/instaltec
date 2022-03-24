@@ -26,10 +26,10 @@ function Orcamentos() {
 
   const onFinish = (values) => {
     setLoadingCadastro(true);
-    console.log(values);
 
-    const teste = {
+    const dadosCadastrais = {
       ...values,
+      key: Math.random(),
       data_envio: values['date-picker'].format('DD/MM/YYYY'),
     };
 
@@ -41,9 +41,7 @@ function Orcamentos() {
     }, 1000);
 
     setTimeout(() => {
-      var novallista = orcamentos;
-      novallista.push(teste);
-      setOrcamentos(() => novallista);
+      setOrcamentos((orcamentos) => [...orcamentos, dadosCadastrais]);
       setLoadingOrcamentos(false);
     }, 2000);
   };
@@ -88,76 +86,111 @@ function Orcamentos() {
           layout="vertical"
         >
           <Form.Item
-            label="key"
-            name="key"
-            rules={[{ required: true, message: 'Informe o key!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="numero_orcamento"
+            label="Nº Orçamento"
             name="numero_orcamento"
-            rules={[{ required: true, message: 'Informe o numero_orcamento!' }]}
+            rules={[
+              { required: true, message: 'Informe o numero do orcamento!' },
+            ]}
           >
-            <Input />
+            <Input placeholder="Digite o nº orçamento" />
           </Form.Item>
           <Form.Item
-            label="cliente"
+            label="Cliente"
             name="cliente"
             rules={[{ required: true, message: 'Informe o cliente!' }]}
           >
-            <Input />
+            <Select placeholder="Selecione o cliente">
+              <Option value="Cliente A">Cliente A</Option>
+              <Option value="Cliente B">Cliente B</Option>
+              <Option value="Cliente C">Cliente C</Option>
+              <Option value="Cliente D">Cliente D</Option>
+              <Option value="Cliente E">Cliente E</Option>
+              <Option value="Cliente F">Cliente F</Option>
+              <Option value="Cliente G">Cliente G</Option>
+              <Option value="Cliente H">Cliente H</Option>
+            </Select>
           </Form.Item>
           <Form.Item
-            label="representante"
+            label="Representante"
             name="representante"
             rules={[{ required: true, message: 'Informe o representante!' }]}
           >
-            <Input />
+            <Input placeholder="Digite o representante" />
           </Form.Item>
           <Form.Item
-            label="titulo_orcamento"
+            label="Titulo do orçamento"
             name="titulo_orcamento"
-            rules={[{ required: true, message: 'Informe o titulo_orcamento!' }]}
+            rules={[
+              { required: true, message: 'Informe o titulo do orçamento!' },
+            ]}
           >
-            <Input />
+            <Input placeholder="Digite o título do orçamento" />
           </Form.Item>
           <Form.Item
+            label="Data de envio"
             name="date-picker"
-            label="DatePicker"
-            rules={[{ required: true, message: 'Informe o data_envio!' }]}
+            rules={[{ required: true, message: 'Informe a data do envio!' }]}
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 5px)',
+              marginRight: '5px',
+            }}
           >
-            <DatePicker format="YYYY-MM-DD HH:mm:ss" />
+            <DatePicker
+              format="DD/MM/YYYY"
+              placeholder="Selecione a data de envio"
+            />
           </Form.Item>
           <Form.Item
-            label="valor_proposta"
+            label="Valor da proposta"
             name="valor_proposta"
-            rules={[{ required: true, message: 'Informe o valor_proposta!' }]}
+            rules={[
+              { required: true, message: 'Informe o valor da proposta!' },
+            ]}
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 5px)',
+              marginLeft: '5px',
+            }}
           >
-            <Input />
+            <Input placeholder="Digite o valor da proposta" />
           </Form.Item>
           <Form.Item
-            label="status"
+            label="Status"
             name="status"
             rules={[{ required: true, message: 'Informe o status!' }]}
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 5px)',
+              marginRight: '5px',
+            }}
           >
-            <Select>
+            <Select placeholder="Selecione o status">
               <Option value="Enviado">Enviado</Option>
               <Option value="Reprovado">Reprovado</Option>
               <Option value="Revisado">Revisado</Option>
             </Select>
           </Form.Item>
           <Form.Item
-            label="forma_aceite"
+            label="Forma de aceite"
             name="forma_aceite"
             rules={[{ required: true, message: 'Informe o forma_aceite!' }]}
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 5px)',
+              marginLeft: '5px',
+            }}
           >
-            <Input />
+            <Select placeholder="Selecione a forma de aceite">
+              <Option value="Email">Email</Option>
+              <Option value="Ordem de compras">Ordem de compras</Option>
+              <Option value="Verbal">Verbal</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loadingCadastro}>
-              Cadastrar cliente
+              Cadastrar orçamento
             </Button>
           </Form.Item>
         </Form>
