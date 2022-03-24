@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { login, logout } from '../../services/auth';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -17,10 +18,10 @@ function Login() {
         `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=login&email=${email}&password=${senha}`
       );
 
-      sessionStorage.setItem('usuario', JSON.stringify(data));
+      login(data.token);
     } catch (error) {
       console.log(error);
-      sessionStorage.removeItem('usuario');
+      logout();
     } finally {
       setLoading(false);
     }
