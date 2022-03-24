@@ -1,4 +1,5 @@
-import { Tag } from 'antd';
+import { Tag, Button } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 export const columns = [
   {
@@ -55,6 +56,27 @@ export const columns = [
     title: 'Forma de aceite',
     dataIndex: 'forma_aceite',
     key: 'forma_aceite',
+  },
+  {
+    title: '',
+    dataIndex: 'delete',
+    key: 'delete',
+    width: '15%',
+    render: () => (
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          type="primary"
+          ghost
+          danger
+          shape="circle"
+          style={{ marginRight: '10px' }}
+          icon={<DeleteOutlined />}
+        />
+        <Button type="primary" ghost shape="round" icon={<PlusOutlined />}>
+          Nova ordem de serviço
+        </Button>
+      </div>
+    ),
   },
 ];
 

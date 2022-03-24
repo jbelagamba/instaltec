@@ -1,3 +1,6 @@
+import { Button } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+
 export const columns = [
   {
     title: 'Código cliente',
@@ -23,6 +26,27 @@ export const columns = [
     title: 'Telefone',
     dataIndex: 'telefone',
     key: 'telefone',
+  },
+  {
+    title: '',
+    dataIndex: 'delete',
+    key: 'delete',
+    width: '15%',
+    render: () => (
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          type="primary"
+          ghost
+          danger
+          shape="circle"
+          style={{ marginRight: '10px' }}
+          icon={<DeleteOutlined />}
+        />
+        <Button type="primary" ghost shape="round" icon={<PlusOutlined />}>
+          Novo orçamento
+        </Button>
+      </div>
+    ),
   },
 ];
 
