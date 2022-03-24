@@ -1,12 +1,14 @@
-import { Layout, Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { Layout } from 'antd';
+
+const { Content } = Layout;
 
 function Clientes() {
   return (
-    <Layout>
-      <Button>Welcome Clientes</Button>
+    <Content className="container whiteBox">
+      <h1>Essa é a pagina de clientes</h1>
       <Link to="/">Home</Link>
-    </Layout>
+    </Content>
   );
 }
 export default Clientes;

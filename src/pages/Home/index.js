@@ -1,12 +1,14 @@
-import { Layout, Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { Layout } from 'antd';
+
+const { Content } = Layout;
 
 function Home() {
   return (
-    <Layout>
-      <Button>Welcome home</Button>
+    <Content className="container whiteBox">
+      <h1>Essa é a home</h1>
       <Link to="/clientes">Clientes</Link>
-    </Layout>
+    </Content>
   );
 }
 export default Home;
