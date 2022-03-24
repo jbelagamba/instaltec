@@ -11,9 +11,9 @@ function Login() {
 
   const postLogin = async (values) => {
     const { email, senha } = values;
+    setLoading(true);
 
     try {
-      setLoading(true);
       const { data } = await axios.get(
         `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=login&email=${email}&password=${senha}`
       );
