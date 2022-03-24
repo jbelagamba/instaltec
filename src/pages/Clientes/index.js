@@ -51,7 +51,7 @@ function Clientes() {
         className="pageHeader"
         extra={
           <Button
-            type="primary"
+            type="danger"
             icon={<PlusOutlined />}
             onClick={() => setModalCadastro(true)}
           >
@@ -129,7 +129,7 @@ function Clientes() {
             <Input placeholder="Digite o telefone" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loadingCadastro}>
+            <Button type="danger" htmlType="submit" loading={loadingCadastro}>
               Cadastrar cliente
             </Button>
           </Form.Item>

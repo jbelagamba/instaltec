@@ -55,7 +55,7 @@ function Orcamentos() {
         className="pageHeader"
         extra={
           <Button
-            type="primary"
+            type="danger"
             icon={<PlusOutlined />}
             onClick={() => setModalCadastro(true)}
           >
@@ -192,7 +192,7 @@ function Orcamentos() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loadingCadastro}>
+            <Button type="danger" htmlType="submit" loading={loadingCadastro}>
               Cadastrar orçamento
             </Button>
           </Form.Item>

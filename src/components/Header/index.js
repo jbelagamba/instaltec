@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { isAuthenticated, logout } from '../../services/auth';
 
+import logo from '../../images/logo.jpg';
+
+
 import {
   UserOutlined,
   HomeOutlined,
@@ -14,24 +17,26 @@ function Header() {
   return (
     <>
       <PageHeader
-        title="Instaltec"
+        title={<img src={logo} width="200" />}
         className="header"
         extra={
           isAuthenticated() && (
-            <Button onClick={() => logout()}>
+            <Button danger type="text" onClick={() => logout()}>
               <UserOutlined /> Sair
             </Button>
           )
         }
       />
 
+
       {isAuthenticated() && (
         <Menu
           mode="horizontal"
           defaultSelectedKeys="home"
           className="menuPrincipal"
+
         >
-          <Menu.Item key="home" icon={<HomeOutlined />}>
+          <Menu.Item key="home" icon={<HomeOutlined />} type="danger">
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item key="clientes" icon={<ContactsOutlined />}>
