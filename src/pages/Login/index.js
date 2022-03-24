@@ -61,7 +61,12 @@ function Login() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="danger" color="red-10" htmlType="submit" loading={loading}>
+          <Button
+            type="danger"
+            color="red-10"
+            htmlType="submit"
+            loading={loading}
+          >
             Entrar
           </Button>
         </Form.Item>

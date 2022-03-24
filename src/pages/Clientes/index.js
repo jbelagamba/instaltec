@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { getToken } from '../../services/auth';
+import axios from 'axios';
 import {
   Layout,
   PageHeader,
@@ -60,6 +62,13 @@ function Clientes() {
     }, 2000);
   };
 
+  const getClientes = async () => {
+    const { data } = await axios.get(
+      `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente&token=${getToken()}`
+    );
+    console.log('data', data);
+  };
+
   return (
     <Content className="container whiteBox">
       <PageHeader
@@ -77,6 +86,8 @@ function Clientes() {
       />
 
       <Divider />
+
+      <button onClick={getClientes}>teste</button>
 
       {clientes && (
         <Table

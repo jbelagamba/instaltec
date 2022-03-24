@@ -8,6 +8,7 @@ import {
   HomeOutlined,
   ContactsOutlined,
   DollarCircleOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 
 import { PageHeader, Button, Menu } from 'antd';
@@ -39,7 +40,7 @@ function Header() {
           <Menu.Item key="clientes" icon={<ContactsOutlined />}>
             <Link to="/clientes">Clientes</Link>
           </Menu.Item>
-          <Menu.Item key="tarefas" icon={<ContactsOutlined />}>
+          <Menu.Item key="tarefas" icon={<CheckCircleOutlined />}>
             <Link to="/tarefas">Tarefas</Link>
           </Menu.Item>
           <Menu.Item key="orcamentos" icon={<DollarCircleOutlined />}>
