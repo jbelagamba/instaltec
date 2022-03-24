@@ -1,5 +1,21 @@
-$theme-colors: (
-  'primary': #343a40,
-);
+@import '~antd/dist/antd.css';
+@import './styles/variables.scss';
 
-@import '~bootstrap/scss/bootstrap';
+body {
+  background-color: $lightGray;
+  .layout {
+    min-height: 100vh;
+  }
+  .pageReader {
+    background-color: $white;
+    box-shadow: $shadow;
+  }
+  .content {
+    width: calc(100% - 100px);
+    margin: 50px auto;
+    padding: 50px;
+    background-color: $white;
+    box-shadow: $shadow;
+    border-radius: 10px;
+  }
+}
