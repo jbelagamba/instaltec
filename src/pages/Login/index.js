@@ -6,22 +6,23 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('rodrigo.bellagamba@gmail.com');
+  const [senha, setSenha] = useState('rbm159753');
 
-  const postLogin = () => {
-    axios
-      .post('/teste/login', {
-        email: email,
-        senha: senha,
-      })
-      .then((response) => {
-        console.log(email, senha);
-        sessionStorage.setItem('tokenLogin', response.token);
-      })
-      .catch((error) => {
-        console.log('deu ruim', error);
-      });
+  const postLogin = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=login&email=${email}&password=${senha}`
+      );
+
+      sessionStorage.setItem('usuario', JSON.stringify(data));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +40,6 @@ function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
-
               <Form.Group className="mb-3" controlId="loginSenha">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
@@ -51,10 +51,10 @@ function Login() {
               </Form.Group>
               <Button
                 variant="primary"
-                className="w-100"
+                disabled={loading}
                 onClick={() => postLogin()}
               >
-                Entrar
+                {loading ? 'Carregando…' : 'Entrar'}
               </Button>
             </Form>
           </Card>
