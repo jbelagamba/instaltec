@@ -6,11 +6,14 @@ export const columns = [
     title: 'Nº Orçamento',
     dataIndex: 'numero_orcamento',
     key: 'numero_orcamento',
+    width: '10%',
+    render: () => Math.floor(100000 + Math.random() * 900000),
   },
   {
     title: 'Cliente',
     dataIndex: 'cliente',
     key: 'cliente',
+    width: '15%',
   },
   {
     title: 'Representante',
@@ -51,11 +54,41 @@ export const columns = [
         {tag}
       </Tag>
     ),
+    filters: [
+      {
+        text: 'Enviado',
+        value: 'Enviado',
+      },
+      {
+        text: 'Reprovado',
+        value: 'Reprovado',
+      },
+      {
+        text: 'Revisado',
+        value: 'Revisado',
+      },
+    ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
   },
   {
     title: 'Forma de aceite',
     dataIndex: 'forma_aceite',
     key: 'forma_aceite',
+    filters: [
+      {
+        text: 'Email',
+        value: 'Email',
+      },
+      {
+        text: 'Ordem de compra',
+        value: 'Ordem de compra',
+      },
+      {
+        text: 'Verbal',
+        value: 'Verbal',
+      },
+    ],
+    onFilter: (value, record) => record.forma_aceite.indexOf(value) === 0,
   },
   {
     title: '',
@@ -82,8 +115,7 @@ export const columns = [
 
 export const dados_orcamentos = [
   {
-    key: '1',
-    numero_orcamento: 10,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente A',
     representante: 'Representante A',
     titulo_orcamento: 'Orçamento A',
@@ -93,8 +125,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Email',
   },
   {
-    key: '2',
-    numero_orcamento: 20,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente A',
     representante: 'Representante B',
     titulo_orcamento: 'Orçamento B',
@@ -104,8 +135,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Ordem de compra',
   },
   {
-    key: '3',
-    numero_orcamento: 30,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente C',
     representante: 'Representante C',
     titulo_orcamento: 'Orçamento C',
@@ -115,8 +145,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Verbal',
   },
   {
-    key: '4',
-    numero_orcamento: 10,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente A',
     representante: 'Representante A',
     titulo_orcamento: 'Orçamento A',
@@ -126,8 +155,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Email',
   },
   {
-    key: '5',
-    numero_orcamento: 20,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente A',
     representante: 'Representante B',
     titulo_orcamento: 'Orçamento B',
@@ -137,8 +165,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Ordem de compra',
   },
   {
-    key: '6',
-    numero_orcamento: 30,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente C',
     representante: 'Representante C',
     titulo_orcamento: 'Orçamento C',
@@ -148,8 +175,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Verbal',
   },
   {
-    key: '7',
-    numero_orcamento: 10,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente A',
     representante: 'Representante A',
     titulo_orcamento: 'Orçamento A',
@@ -159,8 +185,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Email',
   },
   {
-    key: '8',
-    numero_orcamento: 20,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente A',
     representante: 'Representante B',
     titulo_orcamento: 'Orçamento B',
@@ -170,8 +195,7 @@ export const dados_orcamentos = [
     forma_aceite: 'Ordem de compra',
   },
   {
-    key: '9',
-    numero_orcamento: 30,
+    key: Math.floor(100000 + Math.random() * 900000),
     cliente: 'Cliente C',
     representante: 'Representante C',
     titulo_orcamento: 'Orçamento C',

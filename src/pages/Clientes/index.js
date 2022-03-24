@@ -28,6 +28,7 @@ function Clientes() {
     const dadosCadastrais = {
       ...values,
       key: Math.random(),
+      codigo_cliente: Math.random(),
     };
 
     setTimeout(() => {
@@ -84,15 +85,6 @@ function Clientes() {
           autoComplete="off"
           layout="vertical"
         >
-          <Form.Item
-            label="Código do cliente"
-            name="codigo_cliente"
-            rules={[
-              { required: true, message: 'Informe o código do cliente!' },
-            ]}
-          >
-            <Input placeholder="Digite o código do cliente" />
-          </Form.Item>
           <Form.Item
             label="Nome cliente"
             name="nome"
