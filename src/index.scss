@@ -7,9 +7,16 @@ body {
   .layout {
     min-height: 100vh;
   }
-  .pageReader {
+  .header {
     background-color: $white;
     box-shadow: $shadow;
+    padding: 5px 50px;
+  }
+  .menuPrincipal {
+    padding: 0 50px 0 30px;
+  }
+  .pageHeader {
+    padding: 0;
   }
   .whiteBox {
     background-color: $white;

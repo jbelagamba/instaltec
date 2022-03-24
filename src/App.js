@@ -19,7 +19,7 @@ function App() {
     <Layout className="layout">
       <PageHeader
         title="Instaltec"
-        className="pageReader"
+        className="header"
         extra={
           isAuthenticated() && (
             <Button onClick={() => logout()}>
@@ -30,7 +30,11 @@ function App() {
       />
 
       {isAuthenticated() && (
-        <Menu mode="horizontal" defaultSelectedKeys="home">
+        <Menu
+          mode="horizontal"
+          defaultSelectedKeys="home"
+          className="menuPrincipal"
+        >
           <Menu.Item key="home" icon={<HomeOutlined />}>
             <Link to="/">Home</Link>
           </Menu.Item>
