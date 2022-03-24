@@ -5,19 +5,17 @@ import Login from './pages/Login';
 import Clientes from './pages/Clientes';
 
 import { PageHeader, Layout } from 'antd';
-const { Content, Footer } = Layout;
+const { Footer } = Layout;
 
 function App() {
   return (
     <Layout className="layout">
       <PageHeader className="pageReader" title="Instaltec" />
 
-      <Content className="content">
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="clientes" element={<Clientes />} />
-        </Routes>
-      </Content>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="clientes" element={<Clientes />} />
+      </Routes>
 
       <Footer>Instaltec @2022</Footer>
     </Layout>

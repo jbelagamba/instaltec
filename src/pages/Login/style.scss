@@ -1,0 +1,22 @@
+.formLogin {
+  width: fit-content;
+  height: auto;
+  min-width: 500px;
+  margin: 50px auto 0 auto;
+  padding: 75px 50px 50px 50px;
+  position: relative;
+  .ant-input-prefix {
+    opacity: 0.2;
+  }
+  button {
+    width: 100%;
+  }
+}
+.avatar {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%);
+  background-color: $primary;
+}
