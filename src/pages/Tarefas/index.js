@@ -14,56 +14,48 @@ import { PlusOutlined } from '@ant-design/icons';
 import { columns } from './constants';
 const { Content } = Layout;
 
-function Clientes() {
+function Tarefas() {
   const [form] = Form.useForm();
   const [loadingCadastro, setLoadingCadastro] = useState(false);
-  const [loadingClientes, setLoadingClientes] = useState(false);
+  const [loadingTarefas, setLoadingTarefas] = useState(false);
   const [modalCadastro, setModalCadastro] = useState(false);
-  const [clientes, setClientes] = useState([]);
+  const [tarefas, setTarefas] = useState([]);
 
-  const deletarCliente = (id_cliente) => {
-    setClientes((clientes) =>
-      clientes.filter((cliente) => cliente.codigo_cliente !== id_cliente)
+  const deletarTarefa = (id_tarefa) => {
+    setTarefas((tarefas) =>
+      tarefas.filter((tarefa) => tarefa.codigo_tarefa !== id_tarefa)
     );
   };
 
-  const gerarOrcamento = (id_cliente) => {
-    console.log('gerarOrcamento', id_cliente);
-  };
-
-  const cadastrarCliente = (values) => {
+  const cadastrarTarefa = (values) => {
     setLoadingCadastro(true);
-    const id = Math.floor(100000 + Math.random() * 900000);
 
     const dadosCadastrais = {
       ...values,
-      key: id,
-      codigo_cliente: id,
       acoes: {
-        id,
-        deletarCliente,
-        gerarOrcamento,
+        id: values.codigo_tarefa,
+        deletarTarefa,
       },
     };
 
     setTimeout(() => {
       setLoadingCadastro(false);
-      setLoadingClientes(true);
+      setLoadingTarefas(true);
       form.resetFields();
       setModalCadastro(false);
-      message.success('Cliente cadastrado com sucesso!');
+      message.success('Tarefa cadastrada com sucesso!');
     }, 1000);
 
     setTimeout(() => {
-      setClientes((clientes) => [...clientes, dadosCadastrais]);
-      setLoadingClientes(false);
+      setTarefas((tarefas) => [...tarefas, dadosCadastrais]);
+      setLoadingTarefas(false);
     }, 2000);
   };
 
   return (
     <Content className="container whiteBox">
       <PageHeader
-        title="Clientes"
+        title="Tarefas"
         className="pageHeader"
         extra={
           <Button
@@ -71,23 +63,23 @@ function Clientes() {
             icon={<PlusOutlined />}
             onClick={() => setModalCadastro(true)}
           >
-            Cadastrar cliente
+            Cadastrar tarefa
           </Button>
         }
       />
 
       <Divider />
 
-      {clientes && (
+      {tarefas && (
         <Table
           columns={columns}
-          dataSource={[...clientes]}
-          loading={loadingClientes}
+          dataSource={[...tarefas]}
+          loading={loadingTarefas}
         />
       )}
 
       <Drawer
-        title="Cadastro de cliente"
+        title="Cadastro de tarefa"
         placement="right"
         onClose={() => setModalCadastro(false)}
         visible={modalCadastro}
@@ -95,49 +87,42 @@ function Clientes() {
       >
         <Form
           form={form}
-          name="novoCliente"
-          onFinish={cadastrarCliente}
+          name="novoTarefa"
+          onFinish={cadastrarTarefa}
           autoComplete="off"
           layout="vertical"
         >
           <Form.Item
-            label="Nome cliente"
-            name="nome"
-            rules={[{ required: true, message: 'Informe o nome cliente!' }]}
+            label="Código tarefa"
+            name="codigo_tarefa"
+            rules={[{ required: true, message: 'Informe o código da tarefa!' }]}
           >
-            <Input placeholder="Digite o nome do cliente" />
+            <Input placeholder="Digite o código da tarefa" />
           </Form.Item>
           <Form.Item
-            label="CNPJ/CPF"
-            name="cnpj_cpf"
+            label="Título"
+            name="titulo"
             rules={[
               {
                 required: true,
-                message: 'Informe o cnpj/cpf do cliente!',
+                message: 'Informe o titulo da tarefa!',
               },
             ]}
           >
-            <Input placeholder="Digite o CNPJ/CPF" />
+            <Input placeholder="Digite o titulo" />
           </Form.Item>
           <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Informe o email do cliente!' }]}
-          >
-            <Input placeholder="Digite o email" />
-          </Form.Item>
-          <Form.Item
-            label="Telefone"
-            name="telefone"
+            label="Descrição"
+            name="descricao"
             rules={[
-              { required: true, message: 'Informe o telefone do cliente!' },
+              { required: true, message: 'Informe a descrição da tarefa!' },
             ]}
           >
-            <Input placeholder="Digite o telefone" />
+            <Input placeholder="Digite a descrição" />
           </Form.Item>
           <Form.Item>
             <Button type="danger" htmlType="submit" loading={loadingCadastro}>
-              Cadastrar cliente
+              Cadastrar tarefa
             </Button>
           </Form.Item>
         </Form>
@@ -145,4 +130,4 @@ function Clientes() {
     </Content>
   );
 }
-export default Clientes;
+export default Tarefas;

@@ -3,7 +3,6 @@ import { isAuthenticated, logout } from '../../services/auth';
 
 import logo from '../../images/logo.jpg';
 
-
 import {
   UserOutlined,
   HomeOutlined,
@@ -28,19 +27,20 @@ function Header() {
         }
       />
 
-
       {isAuthenticated() && (
         <Menu
           mode="horizontal"
           defaultSelectedKeys="home"
           className="menuPrincipal"
-
         >
           <Menu.Item key="home" icon={<HomeOutlined />} type="danger">
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item key="clientes" icon={<ContactsOutlined />}>
             <Link to="/clientes">Clientes</Link>
+          </Menu.Item>
+          <Menu.Item key="tarefas" icon={<ContactsOutlined />}>
+            <Link to="/tarefas">Tarefas</Link>
           </Menu.Item>
           <Menu.Item key="orcamentos" icon={<DollarCircleOutlined />}>
             <Link to="/orcamentos">Orçamentos</Link>

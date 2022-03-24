@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Clientes from './pages/Clientes';
+import Tarefas from './pages/Tarefas';
 import Orcamentos from './pages/Orcamentos';
 
 import { Layout } from 'antd';
@@ -22,7 +23,8 @@ function App() {
           <>
             <Route path="/" element={<Home />} />
             <Route path="/clientes" element={<Clientes />} />
-            <Route path="orcamentos" element={<Orcamentos />} />
+            <Route path="/tarefas" element={<Tarefas />} />
+            <Route path="/orcamentos" element={<Orcamentos />} />
           </>
         ) : (
           <Route path="/" element={<Login />} />
