@@ -1,13 +1,17 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { isAuthenticated, logout } from './services/auth';
 import './index.scss';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Clientes from './pages/Clientes';
-import { UserOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  HomeOutlined,
+  ContactsOutlined,
+} from '@ant-design/icons';
 
-import { PageHeader, Layout, Button } from 'antd';
+import { PageHeader, Layout, Button, Menu } from 'antd';
 const { Footer } = Layout;
 
 function App() {
@@ -24,6 +28,17 @@ function App() {
           )
         }
       />
+
+      {isAuthenticated() && (
+        <Menu mode="horizontal" defaultSelectedKeys="home">
+          <Menu.Item key="home" icon={<HomeOutlined />}>
+            <Link to="/">Home</Link>
+          </Menu.Item>
+          <Menu.Item key="clientes" icon={<ContactsOutlined />}>
+            <Link to="/clientes">Clientes</Link>
+          </Menu.Item>
+        </Menu>
+      )}
 
       <Routes>
         {isAuthenticated() ? (
