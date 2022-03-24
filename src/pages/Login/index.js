@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { login, logout } from '../../services/auth';
+import { login } from '../../services/auth';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import { Layout, Avatar, Form, Input, Button } from 'antd';
+import { Layout, Avatar, Form, Input, Button, message } from 'antd';
 const { Content } = Layout;
 
 function Login() {
@@ -20,8 +20,7 @@ function Login() {
 
       login(data.token);
     } catch (error) {
-      console.log(error);
-      logout();
+      message.error('Usuário ou senha incorretos!');
     } finally {
       setLoading(false);
     }

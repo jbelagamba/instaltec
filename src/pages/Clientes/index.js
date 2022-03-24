@@ -5,9 +5,10 @@ import {
   Divider,
   Table,
   Button,
-  Modal,
   Form,
   Input,
+  message,
+  Drawer,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { columns, dados_cliente } from './constants';
@@ -34,6 +35,7 @@ function Clientes() {
       setLoadingClientes(true);
       form.resetFields();
       setModalCadastro(false);
+      message.success('Cliente cadastrado com sucesso!');
     }, 1000);
 
     setTimeout(() => {
@@ -68,11 +70,12 @@ function Clientes() {
         />
       )}
 
-      <Modal
+      <Drawer
         title="Cadastro de cliente"
+        placement="right"
+        onClose={() => setModalCadastro(false)}
         visible={modalCadastro}
-        footer={false}
-        onCancel={() => setModalCadastro(false)}
+        size="large"
       >
         <Form
           form={form}
@@ -131,7 +134,7 @@ function Clientes() {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </Drawer>
     </Content>
   );
 }

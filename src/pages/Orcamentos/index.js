@@ -5,11 +5,12 @@ import {
   Divider,
   Table,
   Button,
-  Modal,
   Form,
   Input,
   Select,
   DatePicker,
+  message,
+  Drawer,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { columns, dados_orcamentos } from './constants';
@@ -38,6 +39,7 @@ function Orcamentos() {
       setLoadingOrcamentos(true);
       form.resetFields();
       setModalCadastro(false);
+      message.success('Orçamento cadastrado com sucesso!');
     }, 1000);
 
     setTimeout(() => {
@@ -72,11 +74,12 @@ function Orcamentos() {
         />
       )}
 
-      <Modal
+      <Drawer
         title="Cadastro de orçamento"
+        placement="right"
+        onClose={() => setModalCadastro(false)}
         visible={modalCadastro}
-        footer={false}
-        onCancel={() => setModalCadastro(false)}
+        size="large"
       >
         <Form
           form={form}
@@ -194,7 +197,7 @@ function Orcamentos() {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </Drawer>
     </Content>
   );
 }
