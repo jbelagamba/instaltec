@@ -9,5 +9,5 @@ export const login = (token) => {
 
 export const logout = () => {
   sessionStorage.removeItem('token_usuario');
-  document.location.reload(true);
+  document.location.replace('/');
 };
