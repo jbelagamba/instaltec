@@ -21,54 +21,10 @@ function Clientes() {
   const [loadingCadastro, setLoadingCadastro] = useState(false);
   const [loadingClientes, setLoadingClientes] = useState(false);
   const [modalCadastro, setModalCadastro] = useState(false);
+
   const [clientes, setClientes] = useState([]);
 
-  const deletarCliente = async (id_cliente) => {
-    try {
-      const { data } = await axios.post(
-        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente_delete&token=${getToken()}`,
-        { id: id_cliente }
-      );
-
-      console.log('deletarCliente data', data);
-      getClientes();
-      message.success('Cliente cadastrado com sucesso!');
-    } catch (error) {
-      message.error('Não foi possível cadastrar o cliente!');
-    }
-  };
-
-  const gerarOrcamento = (id_cliente) => {
-    console.log('gerarOrcamento', id_cliente);
-  };
-
-  const cadastrarCliente = async (values) => {
-    const { nome, cnpj_cpf, email, telefone } = values;
-
-    setLoadingCadastro(true);
-    try {
-      const { data } = await axios.post(
-        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente_insert&token=${getToken()}`,
-        {
-          data: {
-            name: nome,
-            cpf_cnpj: cnpj_cpf,
-            email: email,
-            phone: telefone,
-          },
-        }
-      );
-
-      getClientes();
-      message.success('Cliente cadastrado com sucesso!');
-    } catch (error) {
-      message.error('Não foi possível cadastrar o cliente!');
-    } finally {
-      setLoadingCadastro(false);
-    }
-  };
-
-  const getClientes = async () => {
+  const buscarClientes = async () => {
     setLoadingClientes(true);
     try {
       const { data } = await axios.get(
@@ -78,13 +34,13 @@ function Clientes() {
       setClientes(() =>
         data.map(({ id_client, name, cpf_cnpj, email, phone }) => ({
           key: id_client,
-          codigo_cliente: id_client,
-          nome: name,
-          cnpj_cpf: cpf_cnpj,
-          email: email,
-          telefone: phone,
+          id_client,
+          name,
+          cpf_cnpj,
+          email,
+          phone,
           acoes: {
-            id: id_client,
+            id_client,
             deletarCliente,
             gerarOrcamento,
           },
@@ -97,8 +53,60 @@ function Clientes() {
     }
   };
 
+  const deletarCliente = async (id_cliente) => {
+    try {
+      await axios.post(
+        'http://br52.teste.website/~rodr8946/instaltec/php/server.php/',
+        {
+          service: 'cliente_delete',
+          token: getToken(),
+          id: id_cliente,
+        }
+      );
+
+      buscarClientes();
+      message.success('Cliente deletado com sucesso!');
+    } catch (error) {
+      message.error('Não foi possível deletar o cliente!');
+    }
+  };
+
+  const cadastrarCliente = async (values) => {
+    const { name, cpf_cnpj, email, phone } = values;
+
+    setLoadingCadastro(true);
+    try {
+      await axios.post(
+        'http://br52.teste.website/~rodr8946/instaltec/php/server.php/',
+        {
+          service: 'cliente_insert',
+          token: getToken(),
+          data: {
+            name,
+            cpf_cnpj,
+            email,
+            phone,
+          },
+        }
+      );
+
+      buscarClientes();
+      form.resetFields();
+      setModalCadastro(false);
+      message.success('Cliente cadastrado com sucesso!');
+    } catch (error) {
+      message.error('Não foi possível cadastrar o cliente!');
+    } finally {
+      setLoadingCadastro(false);
+    }
+  };
+
+  const gerarOrcamento = (id_cliente) => {
+    console.log('gerarOrcamento', id_cliente);
+  };
+
   useEffect(() => {
-    getClientes();
+    buscarClientes();
   }, []);
 
   return (
@@ -142,15 +150,15 @@ function Clientes() {
           layout="vertical"
         >
           <Form.Item
-            label="Nome cliente"
-            name="nome"
-            rules={[{ required: true, message: 'Informe o nome cliente!' }]}
+            label="name cliente"
+            name="name"
+            rules={[{ required: true, message: 'Informe o name cliente!' }]}
           >
-            <Input placeholder="Digite o nome do cliente" />
+            <Input placeholder="Digite o name do cliente" />
           </Form.Item>
           <Form.Item
             label="CNPJ/CPF"
-            name="cnpj_cpf"
+            name="cpf_cnpj"
             rules={[
               {
                 required: true,
@@ -168,13 +176,11 @@ function Clientes() {
             <Input placeholder="Digite o email" />
           </Form.Item>
           <Form.Item
-            label="Telefone"
-            name="telefone"
-            rules={[
-              { required: true, message: 'Informe o telefone do cliente!' },
-            ]}
+            label="phone"
+            name="phone"
+            rules={[{ required: true, message: 'Informe o phone do cliente!' }]}
           >
-            <Input placeholder="Digite o telefone" />
+            <Input placeholder="Digite o phone" />
           </Form.Item>
           <Form.Item>
             <Button type="danger" htmlType="submit" loading={loadingCadastro}>

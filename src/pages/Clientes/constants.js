@@ -4,8 +4,8 @@ import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 export const columns = [
   {
     title: 'Código cliente',
-    dataIndex: 'codigo_cliente',
-    key: 'codigo_cliente',
+    dataIndex: 'id_client',
+    key: 'id_client',
     width: '10%',
   },
   {
@@ -34,7 +34,7 @@ export const columns = [
     dataIndex: 'acoes',
     key: 'acoes',
     width: '15%',
-    render: ({ id, deletarCliente, gerarOrcamento }) => (
+    render: ({ id_client, deletarCliente, gerarOrcamento }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           type="primary"
@@ -43,14 +43,14 @@ export const columns = [
           shape="circle"
           style={{ marginRight: '10px' }}
           icon={<DeleteOutlined />}
-          onClick={() => deletarCliente(id)}
+          onClick={() => deletarCliente(id_client)}
         />
         <Button
           type="primary"
           ghost
           shape="round"
           icon={<PlusOutlined />}
-          onClick={() => gerarOrcamento(id)}
+          onClick={() => gerarOrcamento(id_client)}
         >
           Novo orçamento
         </Button>
