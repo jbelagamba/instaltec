@@ -23,43 +23,47 @@ function Clientes() {
   const [modalCadastro, setModalCadastro] = useState(false);
   const [clientes, setClientes] = useState([]);
 
-  const deletarCliente = (id_cliente) => {
-    setClientes((clientes) =>
-      clientes.filter((cliente) => cliente.codigo_cliente !== id_cliente)
-    );
+  const deletarCliente = async (id_cliente) => {
+    try {
+      const { data } = await axios.post(
+        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente_delete&token=${getToken()}`,
+        { id: id_cliente }
+      );
+
+      console.log('deletarCliente data', data);
+      getClientes();
+      message.success('Cliente cadastrado com sucesso!');
+    } catch (error) {
+      message.error('Não foi possível cadastrar o cliente!');
+    }
   };
 
   const gerarOrcamento = (id_cliente) => {
     console.log('gerarOrcamento', id_cliente);
   };
 
-  const cadastrarCliente = (values) => {
+  const cadastrarCliente = async (values) => {
+    const { nome, cnpj_cpf, email, telefone } = values;
+
     setLoadingCadastro(true);
-    const id = Math.floor(100000 + Math.random() * 900000);
+    try {
+      const { data } = await axios.post(
+        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente_insert&token=${getToken()}`,
+        {
+          name: nome,
+          cpf_cnpj: cnpj_cpf,
+          email: email,
+          phone: telefone,
+        }
+      );
 
-    const dadosCadastrais = {
-      ...values,
-      key: id,
-      codigo_cliente: id,
-      acoes: {
-        id,
-        deletarCliente,
-        gerarOrcamento,
-      },
-    };
-
-    setTimeout(() => {
-      setLoadingCadastro(false);
-      setLoadingClientes(true);
-      form.resetFields();
-      setModalCadastro(false);
+      getClientes();
       message.success('Cliente cadastrado com sucesso!');
-    }, 1000);
-
-    setTimeout(() => {
-      setClientes((clientes) => [...clientes, dadosCadastrais]);
-      setLoadingClientes(false);
-    }, 2000);
+    } catch (error) {
+      message.error('Não foi possível cadastrar o cliente!');
+    } finally {
+      setLoadingCadastro(false);
+    }
   };
 
   const getClientes = async () => {
