@@ -50,10 +50,12 @@ function Clientes() {
       const { data } = await axios.post(
         `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente_insert&token=${getToken()}`,
         {
-          name: nome,
-          cpf_cnpj: cnpj_cpf,
-          email: email,
-          phone: telefone,
+          data: {
+            name: nome,
+            cpf_cnpj: cnpj_cpf,
+            email: email,
+            phone: telefone,
+          },
         }
       );
 
