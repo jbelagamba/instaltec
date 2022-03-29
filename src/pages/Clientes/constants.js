@@ -7,12 +7,14 @@ export const colunasTabela = [
     dataIndex: 'codigo',
     key: 'codigo',
     width: '10%',
+    sorter: (a, b) => a.codigo.length - b.codigo.length,
   },
   {
     title: 'Nome fantasia',
     dataIndex: 'nome_fantasia',
     width: '25%',
     key: 'nome_fantasia',
+    sorter: (a, b) => a.nome_fantasia.length - b.nome_fantasia.length,
   },
   {
     title: 'CNPJ/CPF',
