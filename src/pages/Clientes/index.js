@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getToken } from '../../services/auth';
 import axios from 'axios';
+import { baseUrl, getToken } from '../../services/auth';
+
 import {
   Layout,
   PageHeader,
@@ -11,10 +12,12 @@ import {
   Input,
   message,
   Drawer,
+  Select,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { columns } from './constants';
+import { colunasTabela, camposFormulario } from './constants';
 const { Content } = Layout;
+const { Option } = Select;
 
 function Clientes() {
   const [form] = Form.useForm();
@@ -23,29 +26,37 @@ function Clientes() {
   const [modalCadastro, setModalCadastro] = useState(false);
 
   const [clientes, setClientes] = useState([]);
+  const [clienteSelecionado, setClienteSelecionado] = useState({});
 
-  const buscarClientes = async () => {
+  const buscarClientes = async (id_cliente) => {
     setLoadingClientes(true);
     try {
-      const { data } = await axios.get(
-        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=cliente&token=${getToken()}`
-      );
+      const { data } = await axios.post(baseUrl, {
+        service: 'cliente_insert',
+        token: getToken(),
+        id: id_cliente,
+      });
 
-      setClientes(() =>
-        data.map(({ id_client, name, cpf_cnpj, email, phone }) => ({
-          key: id_client,
-          id_client,
-          name,
-          cpf_cnpj,
-          email,
-          phone,
-          acoes: {
-            id_client,
-            deletarCliente,
-            gerarOrcamento,
-          },
-        }))
-      );
+      if (id_cliente) {
+        return data;
+      } else {
+        if (data)
+          setClientes(() =>
+            data?.map(({ id_cliente, nome, cnpj, email, telefone }, index) => ({
+              key: index,
+              id_cliente,
+              nome,
+              cnpj,
+              email,
+              telefone,
+              acoes: {
+                id_cliente,
+                deletarCliente,
+                selecionarClienteEdicao,
+              },
+            }))
+          );
+      }
     } catch (error) {
       message.error('Não foi possível carregar a lista de clientes!');
     } finally {
@@ -53,47 +64,17 @@ function Clientes() {
     }
   };
 
-  const deletarCliente = async (id_cliente) => {
-    try {
-      await axios.post(
-        'http://br52.teste.website/~rodr8946/instaltec/php/server.php/',
-        {
-          service: 'cliente_delete',
-          token: getToken(),
-          id: id_cliente,
-        }
-      );
-
-      buscarClientes();
-      message.success('Cliente deletado com sucesso!');
-    } catch (error) {
-      message.error('Não foi possível deletar o cliente!');
-    }
-  };
-
   const cadastrarCliente = async (values) => {
-    const { name, cpf_cnpj, email, phone } = values;
-
     setLoadingCadastro(true);
     try {
-      await axios.post(
-        'http://br52.teste.website/~rodr8946/instaltec/php/server.php/',
-        {
-          service: 'cliente_insert',
-          token: getToken(),
-          data: {
-            name,
-            cpf_cnpj,
-            email,
-            phone,
-          },
-        }
-      );
+      await axios.post(baseUrl, {
+        service: 'cliente_insert',
+        token: getToken(),
+        data: values,
+      });
 
-      buscarClientes();
-      form.resetFields();
-      setModalCadastro(false);
-      message.success('Cliente cadastrado com sucesso!');
+      message.error('Cliente cadastrado com sucesso!');
+      form.setFieldsValue();
     } catch (error) {
       message.error('Não foi possível cadastrar o cliente!');
     } finally {
@@ -101,8 +82,49 @@ function Clientes() {
     }
   };
 
-  const gerarOrcamento = (id_cliente) => {
-    console.log('gerarOrcamento', id_cliente);
+  const deletarCliente = async (id_cliente) => {
+    setLoadingClientes(true);
+    try {
+      await axios.post(baseUrl, {
+        service: 'cliente_delete',
+        token: getToken(),
+        id: id_cliente,
+      });
+
+      buscarClientes();
+      message.success('Cliente deletado com sucesso!');
+    } catch (error) {
+      message.error('Não foi possível deletar o cliente!');
+    } finally {
+      setLoadingClientes(false);
+    }
+  };
+
+  const selecionarClienteEdicao = async (id_cliente) => {
+    const cliente = await buscarClientes(id_cliente);
+    setClienteSelecionado({ id: id_cliente, ...cliente });
+    setModalCadastro(true);
+    form.setFieldsValue(cliente);
+  };
+
+  const editarCliente = async (values) => {
+    setLoadingCadastro(true);
+
+    try {
+      await axios.post(baseUrl, {
+        service: 'cliente_update',
+        token: getToken(),
+        id: clienteSelecionado.id,
+        data: values,
+      });
+
+      message.error('Cliente cadastrado com sucesso!');
+      form.setFieldsValue();
+    } catch (error) {
+      message.error('Não foi possível cadastrar o cliente!');
+    } finally {
+      setLoadingCadastro(false);
+    }
   };
 
   useEffect(() => {
@@ -129,62 +151,56 @@ function Clientes() {
 
       {clientes && (
         <Table
-          columns={columns}
+          columns={colunasTabela}
           dataSource={[...clientes]}
           loading={loadingClientes}
         />
       )}
 
       <Drawer
-        title="Cadastro de cliente"
+        title={clienteSelecionado ? 'Edição de cliente' : 'Cadastro de cliente'}
         placement="right"
         onClose={() => setModalCadastro(false)}
         visible={modalCadastro}
-        size="large"
+        width="75%"
       >
         <Form
           form={form}
           name="novoCliente"
-          onFinish={cadastrarCliente}
-          autoComplete="off"
+          onFinish={clienteSelecionado ? cadastrarCliente : editarCliente}
           layout="vertical"
         >
-          <Form.Item
-            label="name cliente"
-            name="name"
-            rules={[{ required: true, message: 'Informe o name cliente!' }]}
-          >
-            <Input placeholder="Digite o name do cliente" />
-          </Form.Item>
-          <Form.Item
-            label="CNPJ/CPF"
-            name="cpf_cnpj"
-            rules={[
-              {
-                required: true,
-                message: 'Informe o cnpj/cpf do cliente!',
-              },
-            ]}
-          >
-            <Input placeholder="Digite o CNPJ/CPF" />
-          </Form.Item>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Informe o email do cliente!' }]}
-          >
-            <Input placeholder="Digite o email" />
-          </Form.Item>
-          <Form.Item
-            label="phone"
-            name="phone"
-            rules={[{ required: true, message: 'Informe o phone do cliente!' }]}
-          >
-            <Input placeholder="Digite o phone" />
-          </Form.Item>
-          <Form.Item>
+          {camposFormulario.map(({ type, label, name, options }, index) => (
+            <Form.Item
+              key={index}
+              label={label}
+              name={name}
+              rules={[{ required: true, message: 'Campo obrigatório' }]}
+              style={{
+                display: 'inline-block',
+                width: 'calc(50% - 10px)',
+                margin: '5px',
+              }}
+            >
+              {type === 'select' ? (
+                <Select placeholder="Selecione">
+                  {options.map(({ label, value }, index) => (
+                    <Option value={value} key={index}>
+                      {label}
+                    </Option>
+                  ))}
+                </Select>
+              ) : (
+                <Input placeholder={label} />
+              )}
+            </Form.Item>
+          ))}
+
+          <Divider />
+
+          <Form.Item style={{ width: '100%', margin: '5px' }}>
             <Button type="danger" htmlType="submit" loading={loadingCadastro}>
-              Cadastrar cliente
+              {clienteSelecionado ? 'Salvar alterações' : 'Cadastrar cliente'}
             </Button>
           </Form.Item>
         </Form>
