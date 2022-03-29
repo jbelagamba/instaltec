@@ -15,7 +15,7 @@ import {
   Select,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { colunasTabela, camposFormulario } from './constants';
+import { colunasTabela, camposFormulario, camposFiltro } from './constants';
 const { Content } = Layout;
 const { Option } = Select;
 
@@ -26,15 +26,21 @@ function Clientes() {
   const [modalCadastro, setModalCadastro] = useState(false);
 
   const [clientes, setClientes] = useState([]);
-  const [clienteSelecionado, setClienteSelecionado] = useState({});
+  const [clienteSelecionado, setClienteSelecionado] = useState(null);
 
   const buscarClientes = async (id_cliente) => {
     setLoadingClientes(true);
+
     try {
-      const { data } = await axios.post(baseUrl, {
-        service: 'cliente_insert',
-        token: getToken(),
-        id: id_cliente,
+      const { data } = await axios.get(baseUrl, {
+        params: {
+          service: 'cliente',
+          token: getToken(),
+          id: id_cliente,
+          filter: {
+            email: 'geromel',
+          },
+        },
       });
 
       if (id_cliente) {
@@ -42,19 +48,24 @@ function Clientes() {
       } else {
         if (data)
           setClientes(() =>
-            data?.map(({ id_cliente, nome, cnpj, email, telefone }, index) => ({
-              key: index,
-              id_cliente,
-              nome,
-              cnpj,
-              email,
-              telefone,
-              acoes: {
+            data?.map(
+              (
+                { id_cliente, nome_fantasia, cnpj, email, telefone },
+                index
+              ) => ({
+                key: index,
                 id_cliente,
-                deletarCliente,
-                selecionarClienteEdicao,
-              },
-            }))
+                nome_fantasia,
+                cnpj,
+                email,
+                telefone,
+                acoes: {
+                  id_cliente,
+                  deletarCliente,
+                  selecionarClienteEdicao,
+                },
+              })
+            )
           );
       }
     } catch (error) {
@@ -64,7 +75,32 @@ function Clientes() {
     }
   };
 
+  const editarCliente = async (values) => {
+    console.log(values);
+
+    setLoadingCadastro(true);
+
+    try {
+      await axios.post(baseUrl, {
+        service: 'cliente_update',
+        token: getToken(),
+        id: clienteSelecionado.id,
+        data: values,
+      });
+
+      message.error('Cliente cadastrado com sucesso!');
+      form.setFieldsValue();
+      setClienteSelecionado(null);
+    } catch (error) {
+      message.error('Não foi possível cadastrar o cliente!');
+    } finally {
+      setLoadingCadastro(false);
+    }
+  };
+
   const cadastrarCliente = async (values) => {
+    console.log('values', values);
+
     setLoadingCadastro(true);
     try {
       await axios.post(baseUrl, {
@@ -107,26 +143,6 @@ function Clientes() {
     form.setFieldsValue(cliente);
   };
 
-  const editarCliente = async (values) => {
-    setLoadingCadastro(true);
-
-    try {
-      await axios.post(baseUrl, {
-        service: 'cliente_update',
-        token: getToken(),
-        id: clienteSelecionado.id,
-        data: values,
-      });
-
-      message.error('Cliente cadastrado com sucesso!');
-      form.setFieldsValue();
-    } catch (error) {
-      message.error('Não foi possível cadastrar o cliente!');
-    } finally {
-      setLoadingCadastro(false);
-    }
-  };
-
   useEffect(() => {
     buscarClientes();
   }, []);
@@ -146,9 +162,33 @@ function Clientes() {
           </Button>
         }
       />
-
       <Divider />
-
+      <Form name="filtro" layout="inline">
+        {camposFiltro.map(({ type, label, name, options }, index) => (
+          <Form.Item key={index} name={name}>
+            {type === 'select' ? (
+              <Select placeholder="Selecione">
+                {options.map(({ label, value }, index) => (
+                  <Option value={value} key={index}>
+                    {label}
+                  </Option>
+                ))}
+              </Select>
+            ) : (
+              <Input placeholder={label} />
+            )}
+          </Form.Item>
+        ))}
+        <Form.Item>
+          <Button type="danger" htmlType="submit">
+            Filtrar
+          </Button>
+          <Button type="danger" ghost htmlType="reset">
+            Limpar
+          </Button>
+        </Form.Item>
+      </Form>
+      <Divider />
       {clientes && (
         <Table
           columns={colunasTabela}
@@ -156,7 +196,6 @@ function Clientes() {
           loading={loadingClientes}
         />
       )}
-
       <Drawer
         title={clienteSelecionado ? 'Edição de cliente' : 'Cadastro de cliente'}
         placement="right"
@@ -167,7 +206,7 @@ function Clientes() {
         <Form
           form={form}
           name="novoCliente"
-          onFinish={clienteSelecionado ? cadastrarCliente : editarCliente}
+          onFinish={cadastrarCliente}
           layout="vertical"
         >
           {camposFormulario.map(({ type, label, name, options }, index) => (

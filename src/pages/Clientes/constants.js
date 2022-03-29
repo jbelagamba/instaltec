@@ -9,10 +9,10 @@ export const colunasTabela = [
     width: '10%',
   },
   {
-    title: 'name cliente',
-    dataIndex: 'name',
+    title: 'Nome fantasia',
+    dataIndex: 'nome_fantasia',
     width: '25%',
-    key: 'name',
+    key: 'nome_fantasia',
   },
   {
     title: 'CNPJ/CPF',
@@ -59,7 +59,7 @@ export const colunasTabela = [
 
 export const camposFormulario = [
   {
-    type: 'text',
+    type: 'number',
     label: 'Código',
     name: 'codigo',
   },
@@ -68,9 +68,9 @@ export const camposFormulario = [
     label: 'Tipo cliente',
     name: 'tipo',
     options: [
-      { label: 'Industria', value: 'Industria' },
-      { label: 'EAS', value: 'EAS' },
-      { label: 'Laboratório', value: 'Laboratório' },
+      { label: 'Industria', value: 1 },
+      { label: 'EAS', value: 2 },
+      { label: 'Laboratório', value: 3 },
     ],
   },
   {
@@ -84,7 +84,7 @@ export const camposFormulario = [
     name: 'nome_fantasia',
   },
   {
-    type: 'text',
+    type: 'number',
     label: 'CNPJ/CPF',
     name: 'cnpj',
   },
@@ -132,5 +132,43 @@ export const camposFormulario = [
     type: 'email',
     label: 'Email financeiro',
     name: 'financeiro_email',
+  },
+];
+
+export const camposFiltro = [
+  {
+    type: 'text',
+    label: 'Código',
+    name: 'codigo',
+  },
+  {
+    type: 'select',
+    label: 'Tipo',
+    name: 'tipo',
+    options: [
+      { label: 'Industria', value: 1 },
+      { label: 'EAS', value: 2 },
+      { label: 'Laboratório', value: 3 },
+    ],
+  },
+  {
+    type: 'text',
+    label: 'Razão Social',
+    name: 'razao_social',
+  },
+  {
+    type: 'text',
+    label: 'Nome fantasia',
+    name: 'nome_fantasia',
+  },
+  {
+    type: 'text',
+    label: 'CNPJ/CPF',
+    name: 'cnpj',
+  },
+  {
+    type: 'text',
+    label: 'Endereço',
+    name: 'endereco',
   },
 ];
