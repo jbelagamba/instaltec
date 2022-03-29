@@ -1,15 +1,19 @@
 import { Form, Input, Select, Button, Divider } from 'antd';
 import { camposFormulario } from '../../constants';
 const { Option } = Select;
+const { TextArea } = Input;
 
-function FormCliente({ form, cliente, acao, cadastrar, editar, loading }) {
+function FormOrcamento({ form, cadastrar, loading }) {
+  const tarefa = (value) => {
+    const descricaoAtual = form.getFieldsValue().descricao || '';
+    form.setFieldsValue({ descricao: `${descricaoAtual} - ${value} \n` });
+  };
+
   return (
     <Form
       form={form}
       name="novoCliente"
-      onFinish={(values) =>
-        acao === 'edicao' ? editar(values) : cadastrar(values)
-      }
+      onFinish={(values) => cadastrar(values)}
       layout="vertical"
     >
       {camposFormulario.map(({ type, label, name, options }, index) => (
@@ -20,18 +24,24 @@ function FormCliente({ form, cliente, acao, cadastrar, editar, loading }) {
           rules={[{ required: true, message: 'Campo obrigatório' }]}
           style={{
             display: 'inline-block',
-            width: 'calc(50% - 10px)',
+            width: 'calc(100% - 10px)',
             margin: '5px',
           }}
         >
           {type === 'select' ? (
-            <Select placeholder="Selecione">
+            <Select
+              placeholder="Selecione"
+              showSearch
+              onChange={(value) => tarefa(value)}
+            >
               {options.map(({ label, value }, index) => (
                 <Option value={value} key={index}>
                   {label}
                 </Option>
               ))}
             </Select>
+          ) : type === 'textArea' ? (
+            <TextArea style={{ height: 300 }} />
           ) : (
             <Input placeholder={label} />
           )}
@@ -42,10 +52,10 @@ function FormCliente({ form, cliente, acao, cadastrar, editar, loading }) {
 
       <Form.Item>
         <Button type="danger" htmlType="submit" loading={loading}>
-          {acao === 'edicao' ? 'Edição de cliente' : 'Cadastro de cliente'}
+          Cadastrar orçamento
         </Button>
       </Form.Item>
     </Form>
   );
 }
-export default FormCliente;
+export default FormOrcamento;

@@ -4,6 +4,7 @@ import { baseUrl, getToken } from '../../services/auth';
 
 import FormFiltros from './components/FormFiltros';
 import FormCliente from './components/FormCliente';
+import FormOrcamento from '../Orcamentos/components/FormOrcamento';
 
 import {
   Layout,
@@ -22,6 +23,7 @@ const { Content } = Layout;
 
 function Clientes() {
   const [formCliente] = Form.useForm();
+  const [formOrcamento] = Form.useForm();
   const [loadingCadastro, setLoadingCadastro] = useState(false);
   const [loadingClientes, setLoadingClientes] = useState(false);
   const [modalCadastro, setModalCadastro] = useState(false);
@@ -68,7 +70,7 @@ function Clientes() {
               acoes: {
                 id_cliente,
                 deletarCliente,
-                selecionarClienteEdicao,
+                selecionarCliente,
               },
             })
           )
@@ -114,15 +116,20 @@ function Clientes() {
       message.error('Não foi possível cadastrar o cliente!');
     } finally {
       setLoadingCadastro(false);
-      setModalCadastro(false);
+      setModalCadastro(null);
     }
   };
 
-  const selecionarClienteEdicao = async (id_cliente) => {
+  const selecionarCliente = async (id_cliente, acao) => {
     const cliente = await buscarClientes({ id: id_cliente });
     setClienteSelecionado(cliente);
-    setModalCadastro(true);
-    formCliente.setFieldsValue(cliente);
+    setModalCadastro(acao);
+
+    if (acao === 'edicao') {
+      formCliente.setFieldsValue(cliente);
+    } else if (acao === 'orcamento') {
+      formOrcamento.setFieldsValue({ cliente: cliente.nome_fantasia });
+    }
   };
 
   const editarCliente = async (values) => {
@@ -144,7 +151,7 @@ function Clientes() {
       message.error('Não foi possível atualizar o cliente!');
     } finally {
       setLoadingCadastro(false);
-      setModalCadastro(false);
+      setModalCadastro(null);
     }
   };
 
@@ -166,6 +173,10 @@ function Clientes() {
     }
   };
 
+  const cadastrarOrcamento = (values) => {
+    console.log('testecadastro', values);
+  };
+
   useEffect(() => {
     buscarClientes();
   }, []);
@@ -179,7 +190,7 @@ function Clientes() {
           <Button
             type="danger"
             icon={<PlusOutlined />}
-            onClick={() => setModalCadastro(true)}
+            onClick={() => setModalCadastro('cadastroCliente')}
           >
             Cadastrar cliente
           </Button>
@@ -207,19 +218,34 @@ function Clientes() {
         />
       )}
       <Drawer
-        title={clienteSelecionado ? 'Edição de cliente' : 'Cadastro de cliente'}
+        title={
+          modalCadastro === 'orcamento'
+            ? 'Cadastro de orçamento'
+            : modalCadastro === 'edicao'
+            ? 'Edição de cliente'
+            : 'Cadastro de cliente'
+        }
         visible={modalCadastro}
         placement="right"
         width="75%"
-        onClose={() => setModalCadastro(false)}
+        onClose={() => setModalCadastro(null)}
       >
-        <FormCliente
-          form={formCliente}
-          cliente={clienteSelecionado}
-          cadastrar={cadastrarCliente}
-          editar={editarCliente}
-          loading={loadingCadastro}
-        />
+        {modalCadastro === 'orcamento' ? (
+          <FormOrcamento
+            form={formOrcamento}
+            cliente={clienteSelecionado}
+            cadastrar={cadastrarOrcamento}
+            loading={loadingCadastro}
+          />
+        ) : (
+          <FormCliente
+            form={formCliente}
+            acao={modalCadastro}
+            cadastrar={cadastrarCliente}
+            editar={editarCliente}
+            loading={loadingCadastro}
+          />
+        )}
       </Drawer>
     </Content>
   );

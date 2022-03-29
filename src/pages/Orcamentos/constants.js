@@ -205,3 +205,36 @@ export const dados_orcamentos = [
     forma_aceite: 'Verbal',
   },
 ];
+
+export const camposFormulario = [
+  {
+    type: 'text',
+    label: 'Código',
+    name: 'codigo',
+  },
+  {
+    type: 'select',
+    label: 'Cliente',
+    name: 'cliente',
+    options: [
+      { label: 'cliente1', value: 'cliente1' },
+      { label: 'cliente4', value: 'cliente2' },
+      { label: 'cliente3', value: 'cliente3' },
+    ],
+  },
+  {
+    type: 'select',
+    label: 'Tarefas',
+    name: 'tarefas',
+    options: [
+      { label: 'tarefa1', value: 'tarefa1' },
+      { label: 'tarefa2', value: 'tarefa2' },
+      { label: 'tarefa3', value: 'tarefa3' },
+    ],
+  },
+  {
+    type: 'textArea',
+    label: 'Descrição',
+    name: 'descricao',
+  },
+];
