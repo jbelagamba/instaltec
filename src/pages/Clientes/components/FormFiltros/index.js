@@ -23,7 +23,7 @@ function FormFiltros({ onFinish }) {
       {camposFiltro.map(({ type, label, name, options }, index) => (
         <Form.Item key={index} name={name}>
           {type === 'select' ? (
-            <Select placeholder="Selecione">
+            <Select placeholder={label}>
               {options.map(({ label, value }, index) => (
                 <Option value={value} key={index}>
                   {label}
