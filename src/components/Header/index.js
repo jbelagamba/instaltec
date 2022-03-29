@@ -31,19 +31,19 @@ function Header() {
       {isAuthenticated() && (
         <Menu
           mode="horizontal"
-          defaultSelectedKeys="home"
+          defaultSelectedKeys={window.location.pathname}
           className="menuPrincipal"
         >
-          <Menu.Item key="home" icon={<HomeOutlined />} type="danger">
+          <Menu.Item key="/" icon={<HomeOutlined />} type="danger">
             <Link to="/">Home</Link>
           </Menu.Item>
-          <Menu.Item key="clientes" icon={<ContactsOutlined />}>
+          <Menu.Item key="/clientes" icon={<ContactsOutlined />}>
             <Link to="/clientes">Clientes</Link>
           </Menu.Item>
-          <Menu.Item key="tarefas" icon={<CheckCircleOutlined />}>
+          <Menu.Item key="/tarefas" icon={<CheckCircleOutlined />}>
             <Link to="/tarefas">Tarefas</Link>
           </Menu.Item>
-          <Menu.Item key="orcamentos" icon={<DollarCircleOutlined />}>
+          <Menu.Item key="/orcamentos" icon={<DollarCircleOutlined />}>
             <Link to="/orcamentos">Orçamentos</Link>
           </Menu.Item>
         </Menu>
