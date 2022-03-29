@@ -1,7 +1,7 @@
 import { Tag, Button } from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
-export const columns = [
+export const colunasTabela = [
   {
     title: 'Nº Orçamento',
     dataIndex: 'numero_orcamento',
@@ -92,8 +92,8 @@ export const columns = [
   },
   {
     title: '',
-    dataIndex: 'delete',
-    key: 'delete',
+    dataIndex: 'acoes',
+    key: 'acoes',
     width: '15%',
     render: () => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -106,7 +106,7 @@ export const columns = [
           icon={<DeleteOutlined />}
         />
         <Button type="primary" ghost shape="round" icon={<PlusOutlined />}>
-          Nova ordem de serviço
+          Novo pedido
         </Button>
       </div>
     ),
@@ -123,86 +123,6 @@ export const dados_orcamentos = [
     valor_proposta: 'R$1000,00',
     status: 'Enviado',
     forma_aceite: 'Email',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente A',
-    representante: 'Representante B',
-    titulo_orcamento: 'Orçamento B',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$2000,00',
-    status: 'Reprovado',
-    forma_aceite: 'Ordem de compra',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente C',
-    representante: 'Representante C',
-    titulo_orcamento: 'Orçamento C',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$3000,00',
-    status: 'Revisado',
-    forma_aceite: 'Verbal',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente A',
-    representante: 'Representante A',
-    titulo_orcamento: 'Orçamento A',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$1000,00',
-    status: 'Enviado',
-    forma_aceite: 'Email',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente A',
-    representante: 'Representante B',
-    titulo_orcamento: 'Orçamento B',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$2000,00',
-    status: 'Reprovado',
-    forma_aceite: 'Ordem de compra',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente C',
-    representante: 'Representante C',
-    titulo_orcamento: 'Orçamento C',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$3000,00',
-    status: 'Revisado',
-    forma_aceite: 'Verbal',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente A',
-    representante: 'Representante A',
-    titulo_orcamento: 'Orçamento A',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$1000,00',
-    status: 'Enviado',
-    forma_aceite: 'Email',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente A',
-    representante: 'Representante B',
-    titulo_orcamento: 'Orçamento B',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$2000,00',
-    status: 'Reprovado',
-    forma_aceite: 'Ordem de compra',
-  },
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente C',
-    representante: 'Representante C',
-    titulo_orcamento: 'Orçamento C',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$3000,00',
-    status: 'Revisado',
-    forma_aceite: 'Verbal',
   },
 ];
 

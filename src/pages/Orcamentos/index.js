@@ -5,7 +5,7 @@ import FormOrcamento from './components/FormOrcamento';
 import { Layout, PageHeader, Divider, Table, Button, Form, Drawer } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { columns, dados_orcamentos } from './constants';
+import { colunasTabela, dados_orcamentos } from './constants';
 const { Content } = Layout;
 
 function Orcamentos() {
@@ -40,7 +40,7 @@ function Orcamentos() {
 
       {orcamentos && (
         <Table
-          columns={columns}
+          columns={colunasTabela}
           dataSource={[...orcamentos]}
           loading={loadingOrcamentos}
         />
