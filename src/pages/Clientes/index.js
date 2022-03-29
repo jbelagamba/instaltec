@@ -3,6 +3,7 @@ import axios from 'axios';
 import { baseUrl, getToken } from '../../services/auth';
 
 import FormFiltros from './components/FormFiltros';
+import FormCliente from './components/FormCliente';
 
 import {
   Layout,
@@ -10,19 +11,17 @@ import {
   Divider,
   Table,
   Button,
-  Form,
-  Input,
   message,
   Drawer,
-  Select,
+  Form,
 } from 'antd';
+
 import { PlusOutlined } from '@ant-design/icons';
-import { colunasTabela, camposFormulario } from './constants';
+import { colunasTabela } from './constants';
 const { Content } = Layout;
-const { Option } = Select;
 
 function Clientes() {
-  const [form] = Form.useForm();
+  const [formCliente] = Form.useForm();
   const [loadingCadastro, setLoadingCadastro] = useState(false);
   const [loadingClientes, setLoadingClientes] = useState(false);
   const [modalCadastro, setModalCadastro] = useState(false);
@@ -109,7 +108,7 @@ function Clientes() {
       });
 
       message.success('Cliente cadastrado com sucesso!');
-      form.resetFields();
+      formCliente.resetFields();
       buscarClientes();
     } catch (error) {
       message.error('Não foi possível cadastrar o cliente!');
@@ -123,7 +122,7 @@ function Clientes() {
     const cliente = await buscarClientes({ id: id_cliente });
     setClienteSelecionado(cliente);
     setModalCadastro(true);
-    form.setFieldsValue(cliente);
+    formCliente.setFieldsValue(cliente);
   };
 
   const editarCliente = async (values) => {
@@ -138,7 +137,7 @@ function Clientes() {
       });
 
       message.success('Cliente altualizado com sucesso!');
-      form.resetFields();
+      formCliente.resetFields();
       setClienteSelecionado(null);
       buscarClientes();
     } catch (error) {
@@ -209,55 +208,18 @@ function Clientes() {
       )}
       <Drawer
         title={clienteSelecionado ? 'Edição de cliente' : 'Cadastro de cliente'}
-        placement="right"
-        onClose={() => setModalCadastro(false)}
         visible={modalCadastro}
+        placement="right"
         width="75%"
+        onClose={() => setModalCadastro(false)}
       >
-        <Form
-          form={form}
-          name="novoCliente"
-          onFinish={(values) =>
-            clienteSelecionado
-              ? editarCliente(values)
-              : cadastrarCliente(values)
-          }
-          layout="vertical"
-        >
-          {camposFormulario.map(({ type, label, name, options }, index) => (
-            <Form.Item
-              key={index}
-              label={label}
-              name={name}
-              rules={[{ required: true, message: 'Campo obrigatório' }]}
-              style={{
-                display: 'inline-block',
-                width: 'calc(50% - 10px)',
-                margin: '5px',
-              }}
-            >
-              {type === 'select' ? (
-                <Select placeholder="Selecione">
-                  {options.map(({ label, value }, index) => (
-                    <Option value={value} key={index}>
-                      {label}
-                    </Option>
-                  ))}
-                </Select>
-              ) : (
-                <Input placeholder={label} />
-              )}
-            </Form.Item>
-          ))}
-
-          <Divider />
-
-          <Form.Item style={{ width: '100%', margin: '5px' }}>
-            <Button type="danger" htmlType="submit" loading={loadingCadastro}>
-              {clienteSelecionado ? 'Salvar alterações' : 'Cadastrar cliente'}
-            </Button>
-          </Form.Item>
-        </Form>
+        <FormCliente
+          form={formCliente}
+          cliente={clienteSelecionado}
+          cadastrar={cadastrarCliente}
+          editar={editarCliente}
+          loading={loadingCadastro}
+        />
       </Drawer>
     </Content>
   );
