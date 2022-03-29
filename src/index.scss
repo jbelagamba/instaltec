@@ -1,6 +1,7 @@
-@import "~antd/dist/antd.css";
-@import "./styles/variables.scss";
-@import "./pages/Login/style.scss";
+@import '~antd/dist/antd.css';
+@import './styles/variables.scss';
+@import './pages/Login/style.scss';
+@import './pages/Clientes/components/FormFiltros/style.scss';
 
 body {
   background-color: $lightGray;

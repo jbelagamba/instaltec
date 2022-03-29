@@ -5,28 +5,34 @@ export const colunasTabela = [
   {
     title: 'Código',
     dataIndex: 'codigo',
+    key: 'codigo',
     width: '10%',
   },
   {
     title: 'Nome fantasia',
     dataIndex: 'nome_fantasia',
     width: '25%',
+    key: 'nome_fantasia',
   },
   {
     title: 'CNPJ/CPF',
     dataIndex: 'cnpj',
+    key: 'cnpj',
   },
   {
     title: 'Email',
     dataIndex: 'email',
+    key: 'email',
   },
   {
     title: 'Telefone',
     dataIndex: 'telefone',
+    key: 'telefone',
   },
   {
     title: '',
     dataIndex: 'acoes',
+    key: 'acoes',
     width: '15%',
     render: ({ id_cliente, deletarCliente, selecionarClienteEdicao }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -54,7 +60,7 @@ export const colunasTabela = [
 export const camposFormulario = [
   {
     type: 'text',
-    label: 'codigo',
+    label: 'Código',
     name: 'codigo',
   },
   {

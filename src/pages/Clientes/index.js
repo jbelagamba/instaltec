@@ -56,9 +56,12 @@ function Clientes() {
       } else {
         setClientes(() =>
           data.data?.map(
-            ({ id_cliente, nome_fantasia, cnpj, email, telefone }, index) => ({
+            (
+              { codigo, nome_fantasia, cnpj, email, telefone, id_cliente },
+              index
+            ) => ({
               key: index,
-              id_cliente,
+              codigo,
               nome_fantasia,
               cnpj,
               email,
@@ -134,12 +137,12 @@ function Clientes() {
         data,
       });
 
-      message.success('Cliente cadastrado com sucesso!');
+      message.success('Cliente altualizado com sucesso!');
       form.resetFields();
       setClienteSelecionado(null);
       buscarClientes();
     } catch (error) {
-      message.error('Não foi possível cadastrar o cliente!');
+      message.error('Não foi possível atualizar o cliente!');
     } finally {
       setLoadingCadastro(false);
       setModalCadastro(false);
@@ -195,6 +198,7 @@ function Clientes() {
           dataSource={[...clientes]}
           loading={loadingClientes}
           pagination={{
+            hideOnSinglePage: true,
             size: 2,
             total: paginacao.total_paginas,
             onChange: (current) => {

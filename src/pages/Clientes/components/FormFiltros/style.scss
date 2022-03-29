@@ -1,0 +1,14 @@
+form#filtro {
+  margin-left: -7px;
+  margin-right: -7px;
+  .ant-form-item {
+    width: calc(14.28% - 14px);
+    margin: 0 7px !important;
+    button {
+      width: calc(50% - 7px);
+      &:last-of-type {
+        margin-left: 14px;
+      }
+    }
+  }
+}

@@ -8,8 +8,8 @@ function FormFiltros({ onFinish }) {
   const [formFiltro] = Form.useForm();
 
   const limparfiltros = () => {
-    formFiltro.setFieldsValue();
-    onFinish();
+    formFiltro.resetFields();
+    onFinish({});
   };
 
   return (
@@ -37,12 +37,7 @@ function FormFiltros({ onFinish }) {
       ))}
 
       <Form.Item>
-        <Button
-          type="danger"
-          htmlType="submit"
-          icon={<SearchOutlined />}
-          style={{ marginRight: '10px' }}
-        >
+        <Button type="danger" htmlType="submit" icon={<SearchOutlined />}>
           Filtrar
         </Button>
 

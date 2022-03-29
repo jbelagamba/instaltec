@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { login } from '../../services/auth';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
 import { Layout, Avatar, Form, Input, Button, message } from 'antd';
 const { Content } = Layout;
 
