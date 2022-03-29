@@ -34,7 +34,7 @@ export const colunasTabela = [
     dataIndex: 'acoes',
     key: 'acoes',
     width: '15%',
-    render: ({ id_cliente, deletarCliente, selecionarCliente }) => (
+    render: ({ id_cliente, confirmeExclusaoCliente, selecionarCliente }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           type="primary"
@@ -42,7 +42,7 @@ export const colunasTabela = [
           danger
           shape="circle"
           icon={<DeleteOutlined />}
-          onClick={() => deletarCliente(id_cliente)}
+          onClick={() => confirmeExclusaoCliente(id_cliente)}
         />
         <Button
           type="primary"

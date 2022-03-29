@@ -15,11 +15,13 @@ import {
   message,
   Drawer,
   Form,
+  Modal,
 } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { colunasTabela } from './constants';
 const { Content } = Layout;
+const { confirm } = Modal;
 
 function Clientes() {
   const [formCliente] = Form.useForm();
@@ -69,7 +71,7 @@ function Clientes() {
               telefone,
               acoes: {
                 id_cliente,
-                deletarCliente,
+                confirmeExclusaoCliente,
                 selecionarCliente,
               },
             })
@@ -155,7 +157,17 @@ function Clientes() {
     }
   };
 
-  const deletarCliente = async (id_cliente) => {
+  const confirmeExclusaoCliente = (id_cliente) => {
+    confirm({
+      title: 'Excluir cliente?',
+      content: 'Tem certeza que deseja excluir este cliente?',
+      onOk() {
+        excluirCliente(id_cliente);
+      },
+    });
+  };
+
+  const excluirCliente = async (id_cliente) => {
     setLoadingClientes(true);
     try {
       await axios.post(baseUrl, {
@@ -164,10 +176,10 @@ function Clientes() {
         id: id_cliente,
       });
 
-      message.success('Cliente deletado com sucesso!');
+      message.success('Cliente excluído com sucesso!');
       buscarClientes();
     } catch (error) {
-      message.error('Não foi possível deletar o cliente!');
+      message.error('Não foi possível excluir o cliente!');
     } finally {
       setLoadingClientes(false);
     }
