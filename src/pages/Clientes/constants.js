@@ -3,36 +3,30 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 export const colunasTabela = [
   {
-    title: 'Código cliente',
-    dataIndex: 'id_cliente',
-    key: 'id_cliente',
+    title: 'Código',
+    dataIndex: 'codigo',
     width: '10%',
   },
   {
     title: 'Nome fantasia',
     dataIndex: 'nome_fantasia',
     width: '25%',
-    key: 'nome_fantasia',
   },
   {
     title: 'CNPJ/CPF',
     dataIndex: 'cnpj',
-    key: 'cnpj',
   },
   {
     title: 'Email',
     dataIndex: 'email',
-    key: 'email',
   },
   {
     title: 'Telefone',
     dataIndex: 'telefone',
-    key: 'telefone',
   },
   {
     title: '',
     dataIndex: 'acoes',
-    key: 'acoes',
     width: '15%',
     render: ({ id_cliente, deletarCliente, selecionarClienteEdicao }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -59,8 +53,8 @@ export const colunasTabela = [
 
 export const camposFormulario = [
   {
-    type: 'number',
-    label: 'Código',
+    type: 'text',
+    label: 'codigo',
     name: 'codigo',
   },
   {
@@ -84,7 +78,7 @@ export const camposFormulario = [
     name: 'nome_fantasia',
   },
   {
-    type: 'number',
+    type: 'text',
     label: 'CNPJ/CPF',
     name: 'cnpj',
   },

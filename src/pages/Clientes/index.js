@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { baseUrl, getToken } from '../../services/auth';
 
+import FormFiltros from './components/FormFiltros';
+
 import {
   Layout,
   PageHeader,
@@ -15,7 +17,7 @@ import {
   Select,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { colunasTabela, camposFormulario, camposFiltro } from './constants';
+import { colunasTabela, camposFormulario } from './constants';
 const { Content } = Layout;
 const { Option } = Select;
 
@@ -28,80 +30,74 @@ function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [clienteSelecionado, setClienteSelecionado] = useState(null);
 
-  const buscarClientes = async (id_cliente) => {
-    setLoadingClientes(true);
+  const [filtros, setFiltros] = useState({});
+  const [paginacao, setPaginacao] = useState({
+    pagina: 1,
+    total_paginas: 0,
+  });
 
+  const buscarClientes = async (
+    filter = filtros,
+    pagina = paginacao.pagina
+  ) => {
+    setLoadingClientes(true);
     try {
       const { data } = await axios.get(baseUrl, {
         params: {
           service: 'cliente',
           token: getToken(),
-          id: id_cliente,
-          filter: {
-            email: 'geromel',
-          },
+          filter,
+          pagina,
         },
       });
 
-      if (id_cliente) {
-        return data;
+      if (filter.id) {
+        return data.data[0];
       } else {
-        if (data)
-          setClientes(() =>
-            data?.map(
-              (
-                { id_cliente, nome_fantasia, cnpj, email, telefone },
-                index
-              ) => ({
-                key: index,
+        setClientes(() =>
+          data.data?.map(
+            ({ id_cliente, nome_fantasia, cnpj, email, telefone }, index) => ({
+              key: index,
+              id_cliente,
+              nome_fantasia,
+              cnpj,
+              email,
+              telefone,
+              acoes: {
                 id_cliente,
-                nome_fantasia,
-                cnpj,
-                email,
-                telefone,
-                acoes: {
-                  id_cliente,
-                  deletarCliente,
-                  selecionarClienteEdicao,
-                },
-              })
-            )
-          );
+                deletarCliente,
+                selecionarClienteEdicao,
+              },
+            })
+          )
+        );
+
+        setPaginacao({
+          pagina: paginacao.pagina,
+          total_paginas: data.paginacao,
+        });
       }
     } catch (error) {
       message.error('Não foi possível carregar a lista de clientes!');
+      setClientes([]);
     } finally {
       setLoadingClientes(false);
     }
   };
 
-  const editarCliente = async (values) => {
-    console.log(values);
+  const filtrar = (values) => {
+    setFiltros(values);
+    buscarClientes(values, paginacao.pagina);
+  };
 
-    setLoadingCadastro(true);
-
-    try {
-      await axios.post(baseUrl, {
-        service: 'cliente_update',
-        token: getToken(),
-        id: clienteSelecionado.id,
-        data: values,
-      });
-
-      message.error('Cliente cadastrado com sucesso!');
-      form.setFieldsValue();
-      setClienteSelecionado(null);
-    } catch (error) {
-      message.error('Não foi possível cadastrar o cliente!');
-    } finally {
-      setLoadingCadastro(false);
-    }
+  const alterarPagina = (current) => {
+    setPaginacao({ pagina: current, total_paginas: paginacao.total_paginas });
+    buscarClientes(filtros, current);
   };
 
   const cadastrarCliente = async (values) => {
-    console.log('values', values);
-
     setLoadingCadastro(true);
+
     try {
       await axios.post(baseUrl, {
         service: 'cliente_insert',
@@ -109,12 +105,44 @@ function Clientes() {
         data: values,
       });
 
-      message.error('Cliente cadastrado com sucesso!');
-      form.setFieldsValue();
+      message.success('Cliente cadastrado com sucesso!');
+      form.resetFields();
+      buscarClientes();
     } catch (error) {
       message.error('Não foi possível cadastrar o cliente!');
     } finally {
       setLoadingCadastro(false);
+      setModalCadastro(false);
+    }
+  };
+
+  const selecionarClienteEdicao = async (id_cliente) => {
+    const cliente = await buscarClientes({ id: id_cliente });
+    setClienteSelecionado(cliente);
+    setModalCadastro(true);
+    form.setFieldsValue(cliente);
+  };
+
+  const editarCliente = async (values) => {
+    setLoadingCadastro(true);
+    const data = { id: clienteSelecionado.id_cliente, ...values };
+
+    try {
+      await axios.post(baseUrl, {
+        service: 'cliente_update',
+        token: getToken(),
+        data,
+      });
+
+      message.success('Cliente cadastrado com sucesso!');
+      form.resetFields();
+      setClienteSelecionado(null);
+      buscarClientes();
+    } catch (error) {
+      message.error('Não foi possível cadastrar o cliente!');
+    } finally {
+      setLoadingCadastro(false);
+      setModalCadastro(false);
     }
   };
 
@@ -127,20 +155,13 @@ function Clientes() {
         id: id_cliente,
       });
 
-      buscarClientes();
       message.success('Cliente deletado com sucesso!');
+      buscarClientes();
     } catch (error) {
       message.error('Não foi possível deletar o cliente!');
     } finally {
       setLoadingClientes(false);
     }
-  };
-
-  const selecionarClienteEdicao = async (id_cliente) => {
-    const cliente = await buscarClientes(id_cliente);
-    setClienteSelecionado({ id: id_cliente, ...cliente });
-    setModalCadastro(true);
-    form.setFieldsValue(cliente);
   };
 
   useEffect(() => {
@@ -162,38 +183,24 @@ function Clientes() {
           </Button>
         }
       />
+
       <Divider />
-      <Form name="filtro" layout="inline">
-        {camposFiltro.map(({ type, label, name, options }, index) => (
-          <Form.Item key={index} name={name}>
-            {type === 'select' ? (
-              <Select placeholder="Selecione">
-                {options.map(({ label, value }, index) => (
-                  <Option value={value} key={index}>
-                    {label}
-                  </Option>
-                ))}
-              </Select>
-            ) : (
-              <Input placeholder={label} />
-            )}
-          </Form.Item>
-        ))}
-        <Form.Item>
-          <Button type="danger" htmlType="submit">
-            Filtrar
-          </Button>
-          <Button type="danger" ghost htmlType="reset">
-            Limpar
-          </Button>
-        </Form.Item>
-      </Form>
+
+      <FormFiltros onFinish={filtrar} />
+
       <Divider />
       {clientes && (
         <Table
           columns={colunasTabela}
           dataSource={[...clientes]}
           loading={loadingClientes}
+          pagination={{
+            size: 2,
+            total: paginacao.total_paginas,
+            onChange: (current) => {
+              alterarPagina(current);
+            },
+          }}
         />
       )}
       <Drawer
@@ -206,7 +213,11 @@ function Clientes() {
         <Form
           form={form}
           name="novoCliente"
-          onFinish={cadastrarCliente}
+          onFinish={(values) =>
+            clienteSelecionado
+              ? editarCliente(values)
+              : cadastrarCliente(values)
+          }
           layout="vertical"
         >
           {camposFormulario.map(({ type, label, name, options }, index) => (
