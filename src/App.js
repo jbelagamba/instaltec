@@ -14,24 +14,28 @@ import Pedido from './pages/Pedido';
 
 import { Layout } from 'antd';
 
+import { ClientesStorage } from './context/Clientes';
+
 function App() {
   return (
     <Layout className="layout">
       <Header />
 
-      <Routes>
-        {isAuthenticated() ? (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="/clientes" element={<Clientes />} />
-            <Route path="/tarefas" element={<Tarefas />} />
-            <Route path="/orcamentos" element={<Orcamentos />} />
-            <Route path="/pedido" element={<Pedido />} />
-          </>
-        ) : (
-          <Route path="/" element={<Login />} />
-        )}
-      </Routes>
+      <ClientesStorage>
+        <Routes>
+          {isAuthenticated() ? (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/clientes" element={<Clientes />} />
+              <Route path="/tarefas" element={<Tarefas />} />
+              <Route path="/orcamentos" element={<Orcamentos />} />
+              <Route path="/pedido" element={<Pedido />} />
+            </>
+          ) : (
+            <Route path="/" element={<Login />} />
+          )}
+        </Routes>
+      </ClientesStorage>
 
       <Footer />
     </Layout>

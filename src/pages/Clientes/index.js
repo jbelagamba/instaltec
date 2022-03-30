@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { baseUrl, getToken } from '../../services/auth';
 
 import FormFiltros from './components/FormFiltros';
 import FormCliente from './components/FormCliente';
 import FormOrcamento from '../Orcamentos/components/FormOrcamento';
+import { ClienteContext } from '../../context/Clientes';
 
 import {
   Layout,
@@ -24,6 +25,7 @@ const { Content } = Layout;
 const { confirm } = Modal;
 
 function Clientes() {
+  const { buscaCliente } = useContext(ClienteContext);
   const [formCliente] = Form.useForm();
   const [formOrcamento] = Form.useForm();
   const [loadingCadastro, setLoadingCadastro] = useState(false);
@@ -123,7 +125,8 @@ function Clientes() {
   };
 
   const selecionarCliente = async (id_cliente, acao) => {
-    const cliente = await buscarClientes({ id: id_cliente });
+    const cliente = await buscaCliente(id_cliente);
+
     setClienteSelecionado(cliente);
     setModalCadastro(acao);
 

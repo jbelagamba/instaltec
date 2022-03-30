@@ -1,8 +1,15 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { ClienteContext } from '../../../../context/Clientes';
+
 import { Form, Input, Select, Button, Divider } from 'antd';
 import { camposFormulario } from '../../constants';
 const { TextArea } = Input;
 
 function FormOrcamento({ form, cadastrar, loading }) {
+  const { listaClientes } = useContext(ClienteContext);
+
+  console.log(listaClientes);
+
   const tarefa = (option) => {
     const descricaoAtual = form.getFieldsValue().descricao || '';
     form.setFieldsValue({
@@ -36,8 +43,8 @@ function FormOrcamento({ form, cadastrar, loading }) {
               mode={name === 'tarefas' && 'tags'}
               allowClear
               onSelect={(label, option) => tarefa(option)}
-              options={options}
-              fieldNames={options}
+              options={listaClientes}
+              fieldNames={listaClientes}
             />
           ) : type === 'textArea' ? (
             <TextArea style={{ height: 200 }} />
