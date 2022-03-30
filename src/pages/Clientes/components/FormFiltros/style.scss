@@ -2,12 +2,18 @@ form#filtro {
   margin-left: -7px;
   margin-right: -7px;
   .ant-form-item {
+    min-width: 135px;
     width: calc(14.28% - 14px);
-    margin: 0 7px !important;
+    margin: 0 7px 7px 7px;
+    &:last-of-type {
+      min-width: 204px;
+    }
     button {
+      min-width: 95px;
       width: calc(50% - 7px);
       &:last-of-type {
-        margin-left: 14px;
+        margin-left: 7px;
+        margin-bottom: 7px;
       }
     }
   }
