@@ -124,7 +124,17 @@ function Clientes() {
     setModalCadastro(acao);
 
     if (acao === 'edicao') {
-      formCliente.setFieldsValue(cliente);
+      formCliente.setFieldsValue(
+        cliente?.map((cliente) => ({
+          ...cliente,
+          tipo:
+            cliente.tipo === 1
+              ? 'Industria'
+              : cliente.tipo === 2
+              ? 'EAS'
+              : 'Laboratório',
+        }))[0]
+      );
     } else if (acao === 'orcamento') {
       formOrcamento.setFieldsValue({
         cliente: cliente?.nome_fantasia,
@@ -201,7 +211,10 @@ function Clientes() {
           <Button
             type="danger"
             icon={<PlusOutlined />}
-            onClick={() => setModalCadastro('cadastroCliente')}
+            onClick={() => {
+              formCliente.resetFields();
+              setModalCadastro('cadastroCliente');
+            }}
           >
             Cadastrar cliente
           </Button>

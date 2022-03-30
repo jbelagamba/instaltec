@@ -25,7 +25,7 @@ function FormCliente({ form, cliente, acao, cadastrar, editar, loading }) {
           }}
         >
           {type === 'select' ? (
-            <Select placeholder="Selecione">
+            <Select placeholder="Selecione" optionFilterProp="label">
               {options.map(({ label, value }, index) => (
                 <Option value={value} key={index}>
                   {label}

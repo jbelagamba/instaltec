@@ -31,7 +31,7 @@ export const ClientesStorage = ({ children }) => {
 
   const buscaCliente = async (id) => {
     const data = await buscarClientes({ id: id }, 1);
-    return data.data[0];
+    return data.data;
   };
 
   useEffect(() => {
