@@ -131,16 +131,34 @@ export const camposFormulario = [
     type: 'text',
     label: 'Código',
     name: 'codigo',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(33.33% - 10px)',
+    },
   },
   {
     type: 'select',
     label: 'Cliente',
     name: 'cliente',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(33.33% - 10px)',
+    },
+  },
+  {
+    type: 'text',
+    label: 'Local de instalação / Obra',
+    name: 'local',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(33.33% - 10px)',
+    },
   },
   {
     type: 'select',
     label: 'Tarefas',
     name: 'tarefas',
+    mode: 'multiple',
     options: [
       { label: 'tarefa1', value: 'tarefa_id_1' },
       { label: 'tarefa2', value: 'tarefa_id_2' },
@@ -151,5 +169,70 @@ export const camposFormulario = [
     type: 'textArea',
     label: 'Descrição',
     name: 'descricao',
+  },
+
+  {
+    type: 'text',
+    label: 'Prazo começo',
+    name: 'prazo_comeco',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(50% - 10px)',
+    },
+  },
+  {
+    type: 'text',
+    label: 'Prazo execução',
+    name: 'prazo_execucao',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(50% - 10px)',
+    },
+  },
+  {
+    type: 'text',
+    label: 'Valor R$',
+    name: 'valor',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(33.33% - 10px)',
+    },
+  },
+  {
+    type: 'select',
+    label: 'Prazo pagamento',
+    name: 'prazo_pagamento',
+    mode: 'tags',
+    options: [
+      { label: 'À vista', value: 'À vista' },
+      { label: '15 dias', value: '15 dias' },
+      { label: '30 dias', value: '30 dias' },
+      { label: '28/42 dias', value: '28/42 dias' },
+      { label: '28/56 dias', value: '28/56 dias' },
+      { label: '28/28/56/84 dias', value: '28/28/56/84 dias' },
+    ],
+    style: {
+      display: 'inline-flex',
+      width: 'calc(33.33% - 10px)',
+    },
+  },
+  {
+    type: 'text',
+    label: 'Validade',
+    name: 'validade',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(33.33% - 10px)',
+    },
+  },
+  {
+    type: 'textArea',
+    label: 'Forma de pagamento',
+    name: 'forma_pagamento',
+  },
+  {
+    type: 'textArea',
+    label: 'Do inadimplemento',
+    name: 'inadimplemento',
   },
 ];

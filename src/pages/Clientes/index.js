@@ -126,7 +126,10 @@ function Clientes() {
     if (acao === 'edicao') {
       formCliente.setFieldsValue(cliente);
     } else if (acao === 'orcamento') {
-      formOrcamento.setFieldsValue({ cliente: cliente?.nome_fantasia });
+      formOrcamento.setFieldsValue({
+        cliente: cliente?.nome_fantasia,
+        local: cliente?.endereco,
+      });
     }
   };
 
