@@ -143,18 +143,18 @@ export const camposFormulario = [
     ],
   },
   {
+    type: 'textArea',
+    label: 'Descrição',
+    name: 'descricao',
+  },
+  {
     type: 'select',
     label: 'Tarefas',
     name: 'tarefas',
     options: [
-      { label: 'tarefa1', value: 'tarefa1' },
-      { label: 'tarefa2', value: 'tarefa2' },
-      { label: 'tarefa3', value: 'tarefa3' },
+      { label: 'tarefa1', value: 'tarefa_id_1' },
+      { label: 'tarefa2', value: 'tarefa_id_2' },
+      { label: 'tarefa3', value: 'tarefa_id_3' },
     ],
-  },
-  {
-    type: 'textArea',
-    label: 'Descrição',
-    name: 'descricao',
   },
 ];

@@ -1,12 +1,13 @@
 import { Form, Input, Select, Button, Divider } from 'antd';
 import { camposFormulario } from '../../constants';
-const { Option } = Select;
 const { TextArea } = Input;
 
 function FormOrcamento({ form, cadastrar, loading }) {
-  const tarefa = (value) => {
+  const tarefa = (option) => {
     const descricaoAtual = form.getFieldsValue().descricao || '';
-    form.setFieldsValue({ descricao: `${descricaoAtual} - ${value} \n` });
+    form.setFieldsValue({
+      descricao: `${descricaoAtual && descricaoAtual + '\n'}- ${option.label}`,
+    });
   };
 
   return (
@@ -32,16 +33,14 @@ function FormOrcamento({ form, cadastrar, loading }) {
             <Select
               placeholder="Selecione"
               showSearch
-              onChange={(value) => tarefa(value)}
-            >
-              {options.map(({ label, value }, index) => (
-                <Option value={value} key={index}>
-                  {label}
-                </Option>
-              ))}
-            </Select>
+              mode={name === 'tarefas' && 'tags'}
+              allowClear
+              onSelect={(label, option) => tarefa(option)}
+              options={options}
+              fieldNames={options}
+            />
           ) : type === 'textArea' ? (
-            <TextArea style={{ height: 300 }} />
+            <TextArea style={{ height: 200 }} />
           ) : (
             <Input placeholder={label} />
           )}

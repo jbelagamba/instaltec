@@ -46,6 +46,9 @@ function Header() {
           <Menu.Item key="/orcamentos" icon={<DollarCircleOutlined />}>
             <Link to="/orcamentos">Orçamentos</Link>
           </Menu.Item>
+          <Menu.Item key="/pedido" icon={<DollarCircleOutlined />}>
+            <Link to="/pedido">Pedido</Link>
+          </Menu.Item>
         </Menu>
       )}
     </>

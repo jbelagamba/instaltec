@@ -36,6 +36,8 @@ function Orcamentos() {
         }
       />
 
+      <Button>Gerar pedido</Button>
+
       <Divider />
 
       {orcamentos && (

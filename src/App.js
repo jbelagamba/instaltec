@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Clientes from './pages/Clientes';
 import Tarefas from './pages/Tarefas';
 import Orcamentos from './pages/Orcamentos';
+import Pedido from './pages/Pedido';
 
 import { Layout } from 'antd';
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/clientes" element={<Clientes />} />
             <Route path="/tarefas" element={<Tarefas />} />
             <Route path="/orcamentos" element={<Orcamentos />} />
+            <Route path="/pedido" element={<Pedido />} />
           </>
         ) : (
           <Route path="/" element={<Login />} />
