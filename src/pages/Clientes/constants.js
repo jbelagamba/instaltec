@@ -1,5 +1,9 @@
 import { Button } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  DollarCircleOutlined,
+} from '@ant-design/icons';
 
 export const colunasTabela = [
   {
@@ -36,15 +40,14 @@ export const colunasTabela = [
     dataIndex: 'acoes',
     key: 'acoes',
     width: '15%',
-    render: ({ id_cliente, confirmeExclusaoCliente, selecionarCliente }) => (
+    render: ({ id_cliente, selecionarCliente, confirmeExclusaoCliente }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           type="primary"
           ghost
-          danger
           shape="circle"
-          icon={<DeleteOutlined />}
-          onClick={() => confirmeExclusaoCliente(id_cliente)}
+          icon={<DollarCircleOutlined />}
+          onClick={() => selecionarCliente(id_cliente, 'orcamento')}
         />
         <Button
           type="primary"
@@ -57,9 +60,10 @@ export const colunasTabela = [
         <Button
           type="primary"
           ghost
+          danger
           shape="circle"
-          icon={<PlusOutlined />}
-          onClick={() => selecionarCliente(id_cliente, 'orcamento')}
+          icon={<DeleteOutlined />}
+          onClick={() => confirmeExclusaoCliente(id_cliente)}
         />
       </div>
     ),

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ClienteContext } from '../../../../context/Clientes';
 
 import { Form, Input, Select, Button, Divider } from 'antd';
 import { camposFormulario } from '../../constants';
 const { TextArea } = Input;
-const { Option } = Select;
 
 function FormOrcamento({ form, cliente, cadastrar, loading }) {
   const { listaClientes } = useContext(ClienteContext);
