@@ -7,40 +7,41 @@ export const ClienteContext = createContext();
 export const ClientesStorage = ({ children }) => {
   const [listaClientes, setlistaClientes] = useState([]);
 
-  const buscarListaClientes = async () => {
+  const buscarClientes = async (filtros, pagina) => {
     const { data } = await axios.get(baseUrl, {
       params: {
         service: 'cliente',
         token: getToken(),
+        filter: filtros,
+        pagina,
       },
     });
 
-    setlistaClientes(() =>
-      data.data?.map(({ id_cliente, nome_fantasia }) => ({
-        label: nome_fantasia,
-        value: id_cliente,
-      }))
-    );
+    if (!filtros)
+      setlistaClientes(() =>
+        data.data?.map(({ id_cliente, nome_fantasia }) => ({
+          label: nome_fantasia,
+          value: id_cliente,
+        }))
+      );
+
+    //console.log('data', data.data);
+    return data;
   };
 
   const buscaCliente = async (id) => {
-    const { data } = await axios.get(baseUrl, {
-      params: {
-        service: 'cliente',
-        token: getToken(),
-        filter: { id: id },
-      },
-    });
-
+    const data = await buscarClientes({ id: id }, 1);
     return data.data[0];
   };
 
   useEffect(() => {
-    buscarListaClientes();
+    buscarClientes();
   }, []);
 
   return (
-    <ClienteContext.Provider value={{ listaClientes, buscaCliente }}>
+    <ClienteContext.Provider
+      value={{ listaClientes, buscaCliente, buscarClientes }}
+    >
       {children}
     </ClienteContext.Provider>
   );

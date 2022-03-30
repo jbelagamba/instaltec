@@ -136,16 +136,6 @@ export const camposFormulario = [
     type: 'select',
     label: 'Cliente',
     name: 'cliente',
-    options: [
-      { label: 'cliente1', value: 'cliente1' },
-      { label: 'cliente4', value: 'cliente2' },
-      { label: 'cliente3', value: 'cliente3' },
-    ],
-  },
-  {
-    type: 'textArea',
-    label: 'Descrição',
-    name: 'descricao',
   },
   {
     type: 'select',
@@ -156,5 +146,10 @@ export const camposFormulario = [
       { label: 'tarefa2', value: 'tarefa_id_2' },
       { label: 'tarefa3', value: 'tarefa_id_3' },
     ],
+  },
+  {
+    type: 'textArea',
+    label: 'Descrição',
+    name: 'descricao',
   },
 ];

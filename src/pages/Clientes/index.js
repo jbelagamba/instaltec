@@ -25,7 +25,7 @@ const { Content } = Layout;
 const { confirm } = Modal;
 
 function Clientes() {
-  const { buscaCliente } = useContext(ClienteContext);
+  const { buscarClientes, buscaCliente } = useContext(ClienteContext);
   const [formCliente] = Form.useForm();
   const [formOrcamento] = Form.useForm();
   const [loadingCadastro, setLoadingCadastro] = useState(false);
@@ -41,20 +41,13 @@ function Clientes() {
     total_paginas: 0,
   });
 
-  const buscarClientes = async (
+  const listarClientes = async (
     filter = filtros,
     pagina = paginacao.pagina
   ) => {
     setLoadingClientes(true);
     try {
-      const { data } = await axios.get(baseUrl, {
-        params: {
-          service: 'cliente',
-          token: getToken(),
-          filter,
-          pagina,
-        },
-      });
+      const data = await buscarClientes(filter, pagina);
 
       if (filter.id) {
         return data.data[0];
@@ -95,12 +88,12 @@ function Clientes() {
 
   const filtrar = (values) => {
     setFiltros(values);
-    buscarClientes(values, paginacao.pagina);
+    listarClientes(values, paginacao.pagina);
   };
 
   const alterarPagina = (current) => {
     setPaginacao({ pagina: current, total_paginas: paginacao.total_paginas });
-    buscarClientes(filtros, current);
+    listarClientes(filtros, current);
   };
 
   const cadastrarCliente = async (values) => {
@@ -115,7 +108,7 @@ function Clientes() {
 
       message.success('Cliente cadastrado com sucesso!');
       formCliente.resetFields();
-      buscarClientes();
+      listarClientes();
     } catch (error) {
       message.error('Não foi possível cadastrar o cliente!');
     } finally {
@@ -133,7 +126,7 @@ function Clientes() {
     if (acao === 'edicao') {
       formCliente.setFieldsValue(cliente);
     } else if (acao === 'orcamento') {
-      formOrcamento.setFieldsValue({ cliente: cliente.nome_fantasia });
+      formOrcamento.setFieldsValue({ cliente: cliente?.nome_fantasia });
     }
   };
 
@@ -151,7 +144,7 @@ function Clientes() {
       message.success('Cliente altualizado com sucesso!');
       formCliente.resetFields();
       setClienteSelecionado(null);
-      buscarClientes();
+      listarClientes();
     } catch (error) {
       message.error('Não foi possível atualizar o cliente!');
     } finally {
@@ -180,7 +173,7 @@ function Clientes() {
       });
 
       message.success('Cliente excluído com sucesso!');
-      buscarClientes();
+      listarClientes();
     } catch (error) {
       message.error('Não foi possível excluir o cliente!');
     } finally {
@@ -193,7 +186,7 @@ function Clientes() {
   };
 
   useEffect(() => {
-    buscarClientes();
+    listarClientes();
   }, []);
 
   return (

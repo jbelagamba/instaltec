@@ -8,8 +8,6 @@ const { TextArea } = Input;
 function FormOrcamento({ form, cadastrar, loading }) {
   const { listaClientes } = useContext(ClienteContext);
 
-  console.log(listaClientes);
-
   const tarefa = (option) => {
     const descricaoAtual = form.getFieldsValue().descricao || '';
     form.setFieldsValue({
@@ -24,7 +22,7 @@ function FormOrcamento({ form, cadastrar, loading }) {
       onFinish={(values) => cadastrar(values)}
       layout="vertical"
     >
-      {camposFormulario.map(({ type, label, name, options }, index) => (
+      {camposFormulario.map(({ type, label, name }, index) => (
         <Form.Item
           key={index}
           label={label}
@@ -39,10 +37,10 @@ function FormOrcamento({ form, cadastrar, loading }) {
           {type === 'select' ? (
             <Select
               placeholder="Selecione"
-              showSearch
-              mode={name === 'tarefas' && 'tags'}
+              optionFilterProp="label"
+              mode={name === 'tarefas' && 'multiple'}
               allowClear
-              onSelect={(label, option) => tarefa(option)}
+              onSelect={(label, option) => name === 'tarefas' && tarefa(option)}
               options={listaClientes}
               fieldNames={listaClientes}
             />
