@@ -10,19 +10,19 @@ export const colunasTabela = [
     sorter: (a, b) => a.codigo.length - b.codigo.length,
   },
   {
-    title: 'titulo',
+    title: 'Título',
     dataIndex: 'titulo',
     width: '25%',
     key: 'titulo',
     sorter: (a, b) => a.titulo.length - b.titulo.length,
   },
   {
-    title: 'tipo',
+    title: 'Natureza',
     dataIndex: 'tipo',
     key: 'tipo',
   },
   {
-    title: 'descricao',
+    title: 'Descrição',
     dataIndex: 'descricao',
     key: 'descricao',
   },
