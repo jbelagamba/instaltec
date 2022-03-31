@@ -194,8 +194,8 @@ function Orcamentos() {
         id_obra,
         id_orcamento,
         id_orcamento_status: {
-          label: status.nome,
-          value: status.id_orcamento_status,
+          label: status?.nome,
+          value: status?.id_orcamento_status,
         },
         inadimplento,
         prazo_comeco,
@@ -232,7 +232,8 @@ function Orcamentos() {
         data: {
           id: orcamentoSelecionado.id_orcamento,
           titulo,
-          id_orcamento_status,
+          id_orcamento_status:
+            parseInt(id_orcamento_status.value) || id_orcamento_status,
           codigo,
           id_cliente,
           id_obra,

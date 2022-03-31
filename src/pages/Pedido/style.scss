@@ -1,0 +1,23 @@
+.tab-status-true {
+  color: #52c41a;
+}
+.tab-status-false {
+  color: #faad14;
+}
+
+.ant-switch-checked {
+  background-color: #52c41a;
+}
+
+.ant-page-header.ant-page-header-ghost {
+  padding-left: 0;
+  padding-top: 0;
+}
+
+.ant-page-header-heading-left {
+  flex-direction: row-reverse;
+}
+
+span.ant-page-header-heading-tags {
+  margin-right: 10px;
+}
