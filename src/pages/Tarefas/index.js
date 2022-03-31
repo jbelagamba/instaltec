@@ -31,7 +31,6 @@ function Tarefas() {
   const [modalCadastro, setModalCadastro] = useState(false);
 
   const [tarefas, setTarefas] = useState([]);
-
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
 
   const [filtros, setFiltros] = useState({});
@@ -54,7 +53,6 @@ function Tarefas() {
           selecionarTarefa,
         },
       }));
-
       setTarefas(teste);
     } catch (error) {
     } finally {

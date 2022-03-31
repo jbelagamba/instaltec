@@ -17,7 +17,6 @@ function FormTarefa({ form, acao, cadastrar, editar, loading }) {
           key={index}
           label={label}
           name={name}
-          rules={[{ required: true, message: 'Campo obrigatório' }]}
           style={{
             display: 'inline-block',
             width: 'calc(50% - 10px)',

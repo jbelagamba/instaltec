@@ -1,132 +1,114 @@
 import { Tag, Button } from 'antd';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 export const colunasTabela = [
   {
-    title: 'Nº Orçamento',
-    dataIndex: 'numero_orcamento',
-    key: 'numero_orcamento',
+    title: 'Código',
+    dataIndex: 'codigo',
+    key: 'codigo',
     width: '10%',
-    render: () => Math.floor(100000 + Math.random() * 900000),
+  },
+  {
+    title: 'Título',
+    dataIndex: 'titulo',
+    key: 'titulo',
   },
   {
     title: 'Cliente',
-    dataIndex: 'cliente',
-    key: 'cliente',
-    width: '15%',
+    dataIndex: 'nome_cliente',
+    key: 'nome_cliente',
   },
   {
-    title: 'Representante',
-    dataIndex: 'representante',
-    key: 'representante',
-  },
-  {
-    title: 'Representante',
-    dataIndex: 'representante',
-    key: 'representante',
-  },
-  {
-    title: 'Titulo orçamento',
-    dataIndex: 'titulo_orcamento',
-    key: 'titulo_orcamento',
-  },
-  {
-    title: 'Data envio',
-    dataIndex: 'data_envio',
-    key: 'data_envio',
-  },
-  {
-    title: 'Valor proposta',
-    dataIndex: 'valor_proposta',
-    key: 'valor_proposta',
+    title: 'Valor',
+    dataIndex: 'valor',
+    key: 'valor',
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (tag) => (
+    width: '15%',
+    render: ({ id, nome }) => (
       <Tag
         color={
-          tag === 'Enviado' ? 'green' : tag === 'Reprovado' ? 'red' : 'geekblue'
+          id === '1'
+            ? 'gold'
+            : id === '2'
+            ? 'blue'
+            : id === '3'
+            ? 'geekblue'
+            : id === '4'
+            ? 'red'
+            : id === '5'
+            ? 'green'
+            : id === '6'
+            ? 'lime'
+            : 'default'
         }
-        key={tag}
       >
-        {tag}
+        {nome}
       </Tag>
     ),
-    filters: [
-      {
-        text: 'Enviado',
-        value: 'Enviado',
-      },
-      {
-        text: 'Reprovado',
-        value: 'Reprovado',
-      },
-      {
-        text: 'Revisado',
-        value: 'Revisado',
-      },
-    ],
-    onFilter: (value, record) => record.status.indexOf(value) === 0,
-  },
-  {
-    title: 'Forma de aceite',
-    dataIndex: 'forma_aceite',
-    key: 'forma_aceite',
-    filters: [
-      {
-        text: 'Email',
-        value: 'Email',
-      },
-      {
-        text: 'Ordem de compra',
-        value: 'Ordem de compra',
-      },
-      {
-        text: 'Verbal',
-        value: 'Verbal',
-      },
-    ],
-    onFilter: (value, record) => record.forma_aceite.indexOf(value) === 0,
   },
   {
     title: '',
     dataIndex: 'acoes',
     key: 'acoes',
     width: '15%',
-    render: () => (
+    render: ({
+      id_orcamento,
+      selecionarOrcamento,
+      confirmeExclusaoOrcamento,
+    }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          type="primary"
+          ghost
+          shape="circle"
+          icon={<EditOutlined />}
+          style={{ margin: '0 10px' }}
+          onClick={() => selecionarOrcamento(id_orcamento, 'edicao')}
+        />
         <Button
           type="primary"
           ghost
           danger
           shape="circle"
-          style={{ marginRight: '10px' }}
           icon={<DeleteOutlined />}
+          onClick={() => confirmeExclusaoOrcamento(id_orcamento)}
         />
-        <Button type="primary" ghost shape="round" icon={<PlusOutlined />}>
-          Novo pedido
-        </Button>
       </div>
     ),
   },
 ];
 
-export const dados_orcamentos = [
-  {
-    key: Math.floor(100000 + Math.random() * 900000),
-    cliente: 'Cliente A',
-    representante: 'Representante A',
-    titulo_orcamento: 'Orçamento A',
-    data_envio: '16/08/2022',
-    valor_proposta: 'R$1000,00',
-    status: 'Enviado',
-    forma_aceite: 'Email',
-  },
-];
-
 export const camposFormulario = [
+  {
+    type: 'text',
+    label: 'Título',
+    name: 'titulo',
+    style: {
+      display: 'inline-flex',
+      width: 'calc(80% - 10px)',
+    },
+  },
+  {
+    type: 'select',
+    label: 'Status',
+    name: 'id_orcamento_status',
+    options: [
+      { label: 'Aberto', value: 1 },
+      { label: 'Enviado', value: 2 },
+      { label: 'Revisado', value: 3 },
+      { label: 'Reprovado', value: 4 },
+      { label: 'Aprovado', value: 5 },
+      { label: 'Concluído', value: 6 },
+    ],
+    style: {
+      display: 'inline-flex',
+      width: 'calc(20% - 10px)',
+    },
+  },
   {
     type: 'text',
     label: 'Código',
@@ -139,7 +121,7 @@ export const camposFormulario = [
   {
     type: 'select',
     label: 'Cliente',
-    name: 'cliente',
+    name: 'id_cliente',
     style: {
       display: 'inline-flex',
       width: 'calc(33.33% - 10px)',
@@ -148,7 +130,7 @@ export const camposFormulario = [
   {
     type: 'text',
     label: 'Local de instalação / Obra',
-    name: 'local',
+    name: 'id_obra',
     style: {
       display: 'inline-flex',
       width: 'calc(33.33% - 10px)',
@@ -170,7 +152,6 @@ export const camposFormulario = [
     label: 'Descrição',
     name: 'descricao',
   },
-
   {
     type: 'text',
     label: 'Prazo começo',
@@ -236,3 +217,10 @@ export const camposFormulario = [
     name: 'inadimplemento',
   },
 ];
+
+export const orcamentoDefault = {
+  prazo_pagamento: ['30 dias'],
+  validade: '15 dias',
+  inadimplemento: `1-Em caso de inadimplência por parte do CONTRATANTE quanto ao pagamento do serviço no prazo informado acima, deverá incidir sobre o valor do presente instrumento multa pecuniária de 2,0%, juros de mora de 1,0% ao mês e correção monetária.\n2-Parcelas não pagas serão protestada automaticamente 10 dias após o vencimento, conforme o prazo informado no contrato de prestação de serviços.\n3-Em caso de cobrança judicial, devem ser acrescidas custas processuais e 50% de honorários advocatícios.\nDo Foro de Eleição:\nAs partes elegem o foro da comarca de Canoas / RS para nele dirimirem eventuais dúvidas oriundas do presente instrumento, com renuncia expressa de qualquer outro foro por mais privilegiado que seja.\nTermo de Aceite: Pelo presente termo aprovamos o orçamento e concordamos na integra e sem ressalvas as condições comerciais gerais de fornecimento descritas na proposta.\nAutorizamos a implantação e começo dos serviços.\nNome:________________________________ N° documento:_____________________\nFunção:_______________________________ Data:________________________`,
+  forma_pagamento: `(credito no valor total e no prazo informado na NF na conta PJ da empresa atravez de PIX CNPJ: (nome da chave pix) ou transferencia eletronica para: Banco Bradesco AG: (numero da agencia) CC: (numero da conta) Com opção de outras condições predeterminadas selecionais como: (Boleto bancário) ou (outros - onde será descrito manualmente a forma de pagamento)`,
+};
