@@ -25,7 +25,6 @@ export const ClientesStorage = ({ children }) => {
         }))
       );
 
-    //console.log('data', data.data);
     return data;
   };
 

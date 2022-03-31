@@ -2,11 +2,11 @@ import { Form, Input, Select, Button, Divider } from 'antd';
 import { camposFormulario } from '../../constants';
 const { Option } = Select;
 
-function FormCliente({ form, acao, cadastrar, editar, loading }) {
+function FormTarefa({ form, acao, cadastrar, editar, loading }) {
   return (
     <Form
       form={form}
-      name="cliente"
+      name="tarefa"
       onFinish={(values) =>
         acao === 'edicao' ? editar(values) : cadastrar(values)
       }
@@ -48,4 +48,4 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
     </Form>
   );
 }
-export default FormCliente;
+export default FormTarefa;

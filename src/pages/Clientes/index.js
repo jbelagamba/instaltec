@@ -120,7 +120,7 @@ function Clientes() {
   const selecionarCliente = async (id_cliente, acao) => {
     const cliente = await buscaCliente(id_cliente);
 
-    setClienteSelecionado(cliente);
+    setClienteSelecionado(cliente[0]);
     setModalCadastro(acao);
 
     if (acao === 'edicao') {

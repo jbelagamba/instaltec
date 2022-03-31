@@ -15,6 +15,7 @@ import Pedido from './pages/Pedido';
 import { Layout } from 'antd';
 
 import { ClientesStorage } from './context/Clientes';
+import { TarefasStorage } from './context/Tarefas';
 
 function App() {
   return (
@@ -22,19 +23,21 @@ function App() {
       <Header />
 
       <ClientesStorage>
-        <Routes>
-          {isAuthenticated() ? (
-            <>
-              <Route path="/" element={<Home />} />
-              <Route path="/clientes" element={<Clientes />} />
-              <Route path="/tarefas" element={<Tarefas />} />
-              <Route path="/orcamentos" element={<Orcamentos />} />
-              <Route path="/pedido" element={<Pedido />} />
-            </>
-          ) : (
-            <Route path="/" element={<Login />} />
-          )}
-        </Routes>
+        <TarefasStorage>
+          <Routes>
+            {isAuthenticated() ? (
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/clientes" element={<Clientes />} />
+                <Route path="/tarefas" element={<Tarefas />} />
+                <Route path="/orcamentos" element={<Orcamentos />} />
+                <Route path="/pedido" element={<Pedido />} />
+              </>
+            ) : (
+              <Route path="/" element={<Login />} />
+            )}
+          </Routes>
+        </TarefasStorage>
       </ClientesStorage>
 
       <Footer />
