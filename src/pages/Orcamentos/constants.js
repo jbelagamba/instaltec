@@ -1,5 +1,5 @@
 import { Tag, Button } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CheckOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 export const colunasTabela = [
   {
@@ -61,6 +61,12 @@ export const colunasTabela = [
       confirmeExclusaoOrcamento,
     }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          ghost
+          shape="circle"
+          icon={<CheckOutlined />}
+          style={{ color: 'green', borderColor: 'green' }}
+        />
         <Button
           type="primary"
           ghost
