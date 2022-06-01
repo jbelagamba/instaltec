@@ -172,7 +172,7 @@ function Tarefas() {
               setModalCadastro('cadastroTarefa');
             }}
           >
-            Cadastrar cliente
+            Cadastrar tarefa
           </Button>
         }
       />

@@ -1,5 +1,9 @@
 import { Tag, Button } from 'antd';
-import { CheckOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  PrinterOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 
 export const colunasTabela = [
   {
@@ -57,15 +61,17 @@ export const colunasTabela = [
     width: '15%',
     render: ({
       id_orcamento,
-      selecionarOrcamento,
+      gerarPDF,
+      abrirOrcamento,
       confirmeExclusaoOrcamento,
     }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           ghost
           shape="circle"
-          icon={<CheckOutlined />}
+          icon={<PrinterOutlined />}
           style={{ color: 'green', borderColor: 'green' }}
+          onClick={() => gerarPDF(id_orcamento)}
         />
         <Button
           type="primary"
@@ -73,7 +79,7 @@ export const colunasTabela = [
           shape="circle"
           icon={<EditOutlined />}
           style={{ margin: '0 10px' }}
-          onClick={() => selecionarOrcamento(id_orcamento, 'edicao')}
+          onClick={() => abrirOrcamento(id_orcamento, 'edicao')}
         />
         <Button
           type="primary"

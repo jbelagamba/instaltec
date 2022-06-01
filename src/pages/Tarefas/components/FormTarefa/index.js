@@ -41,7 +41,7 @@ function FormTarefa({ form, acao, cadastrar, editar, loading }) {
 
       <Form.Item>
         <Button type="danger" htmlType="submit" loading={loading}>
-          {acao === 'edicao' ? 'Edição de cliente' : 'Cadastro de cliente'}
+          {acao === 'edicao' ? 'Edição de tarefa' : 'Cadastro de tarefa'}
         </Button>
       </Form.Item>
     </Form>

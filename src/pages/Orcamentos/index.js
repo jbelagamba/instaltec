@@ -3,7 +3,7 @@ import axios from 'axios';
 import { baseUrl, getToken } from '../../services/auth';
 
 import FormOrcamento from './components/FormOrcamento';
-
+import logo from '../../images/logo.jpg';
 import {
   Layout,
   PageHeader,
@@ -68,8 +68,9 @@ function Orcamentos() {
               status: { id: status?.id_orcamento_status, nome: status?.nome },
               acoes: {
                 id_orcamento,
+                gerarPDF,
                 confirmeExclusaoOrcamento,
-                selecionarOrcamento,
+                abrirOrcamento,
               },
             })
           )
@@ -164,7 +165,7 @@ function Orcamentos() {
     }
   };
 
-  const selecionarOrcamento = async (id_orcamento, acao) => {
+  const abrirOrcamento = async (id_orcamento, acao) => {
     const orcamento = await listarOrcamentos({ id: id_orcamento });
     setOrcamentoSelecionado(orcamento);
     setModalCadastro(acao);
@@ -258,6 +259,76 @@ function Orcamentos() {
       setLoadingCadastro(false);
       setModalCadastro(null);
     }
+  };
+
+  const gerarPDF = async (id_orcamento) => {
+    console.log('logo', logo);
+    const orcamento = await listarOrcamentos({ id: id_orcamento });
+
+    const htmlOrcamento = `
+      <htmlpageheader name="headerCapa">
+        <table>
+          <tr>
+            <td><h1>Instaltec<h1></td>
+          </tr>
+        </table>
+      </htmlpageheader>
+
+      <htmlpageheader name="headerPaginas">Instaltec headerPaginas</htmlpageheader>
+
+      <htmlpagefooter name="footerCapa">
+        <table>
+          <tr>
+            <td>JJFagundes Jr. Instalações</td>
+          </tr>
+          <tr>
+            <td>Cnpj:17.298.937/0001-98</td>
+          </tr>
+          <tr>
+            <td>Crea: 217248</td>
+          </tr>
+          <tr>
+            <td>Av. Ramiro Barcelos, 2094, São José, Canoas/RS</td>
+          </tr>
+          <tr>
+            <td>(51) 3465-7975 / 98109-3837</td>
+          </tr>
+          <tr>
+            <td>instaltecrs@gmail.com</td>
+          </tr>
+          <tr>
+            <td>Criado por: João Jr. / Gerente</td>
+          </tr>
+        </table>
+      </htmlpagefooter>
+
+      <sethtmlpageheader name="headerCapa" value="on" show-this-page="1" />
+      <sethtmlpageheader name="headerPaginas" value="on" />
+
+      <sethtmlpagefooter name="footerCapa" value="on" show-this-page="1" />
+  
+
+      <table>
+        <tr>
+          <td>tabela</td>
+        </tr>
+      </table>
+    `;
+
+    try {
+      const data = await axios.post(baseUrl, {
+        service: 'gerapdf',
+        token: getToken(),
+        html: window.btoa(htmlOrcamento),
+      });
+
+      const linkSource = `data:application/pdf;base64,${data.data.pdf}`;
+      const downloadLink = document.createElement('a');
+      const fileName = `orcamento-${id_orcamento}.pdf`;
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
+    } catch (error) {}
   };
 
   useEffect(() => {
