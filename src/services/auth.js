@@ -1,4 +1,4 @@
-export const baseUrl = 'http://br52.teste.website/~rodr8946/instaltec/';
+export const baseUrl = 'https://www.netcar-rc.com.br/installapi/';
 
 export const isAuthenticated = () => sessionStorage.getItem('token_usuario');
 
