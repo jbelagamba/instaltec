@@ -1,4 +1,4 @@
-export const baseUrl = 'https://www.netcar-rc.com.br/installapi/';
+export const baseUrl = 'https://cliente.quantaeng.com.br/instaltecapi/';
 
 export const isAuthenticated = () => sessionStorage.getItem('token_usuario');
 
