@@ -14,7 +14,7 @@ function Login() {
 
     try {
       const { data } = await axios.get(
-        `http://br52.teste.website/~rodr8946/instaltec/php/server.php?service=login&email=${email}&password=${senha}`
+        `https://cliente.quantaeng.com.br/instaltecapi/?service=login&email=${email}&password=${senha}`
       );
 
       login(data.token);
