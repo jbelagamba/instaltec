@@ -55,15 +55,15 @@ function Clientes() {
         setClientes(() =>
           data.data?.map(
             (
-              { codigo, nome_fantasia, cnpj, email, telefone, id_cliente },
+              { id_cliente, razao_social, nome_fantasia, cnpj_cpf, tecnico },
               index
             ) => ({
               key: index,
-              codigo,
+              id_cliente,
+              razao_social,
               nome_fantasia,
-              cnpj,
-              email,
-              telefone,
+              cnpj_cpf,
+              tecnico,
               acoes: {
                 id_cliente,
                 confirmeExclusaoCliente,
@@ -128,9 +128,9 @@ function Clientes() {
         cliente?.map((cliente) => ({
           ...cliente,
           tipo:
-            cliente.tipo === 1
+            cliente.tipo == 1
               ? 'Industria'
-              : cliente.tipo === 2
+              : cliente.tipo == 2
               ? 'EAS'
               : 'Laboratório',
         }))[0]
@@ -145,7 +145,12 @@ function Clientes() {
 
   const editarCliente = async (values) => {
     setLoadingCadastro(true);
-    const data = { id: clienteSelecionado.id_cliente, ...values };
+
+    const data = {
+      id: clienteSelecionado.id_cliente,
+      ...values,
+      tipo: values.tipo == 'Industria' ? 1 : values.tipo == 'EAS' ? 2 : 3,
+    };
 
     try {
       await axios.post(baseUrl, {
@@ -226,21 +231,21 @@ function Clientes() {
       <FormFiltros onFinish={filtrar} />
 
       <Divider />
-      {clientes && (
-        <Table
-          columns={colunasTabela}
-          dataSource={[...clientes]}
-          loading={loadingClientes}
-          pagination={{
-            hideOnSinglePage: true,
-            size: 2,
-            total: paginacao.total_paginas,
-            onChange: (current) => {
-              alterarPagina(current);
-            },
-          }}
-        />
-      )}
+
+      <Table
+        columns={colunasTabela}
+        dataSource={clientes && [...clientes]}
+        loading={loadingClientes}
+        pagination={{
+          hideOnSinglePage: true,
+          size: 2,
+          total: paginacao.total_paginas,
+          onChange: (current) => {
+            alterarPagina(current);
+          },
+        }}
+      />
+
       <Drawer
         title={
           modalCadastro === 'orcamento'

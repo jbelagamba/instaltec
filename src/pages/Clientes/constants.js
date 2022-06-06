@@ -8,10 +8,10 @@ import {
 export const colunasTabela = [
   {
     title: 'Código',
-    dataIndex: 'codigo',
-    key: 'codigo',
+    dataIndex: 'id_cliente',
+    key: 'id_cliente',
     width: '10%',
-    sorter: (a, b) => a.codigo.length - b.codigo.length,
+    sorter: (a, b) => a.id_cliente.length - b.id_cliente.length,
   },
   {
     title: 'Razão social',
@@ -29,8 +29,8 @@ export const colunasTabela = [
   },
   {
     title: 'CNPJ/CPF',
-    dataIndex: 'cnpj',
-    key: 'cnpj',
+    dataIndex: 'cnpj_cpf',
+    key: 'cnpj_cpf',
   },
   {
     title: 'Contato técnico',
@@ -77,7 +77,7 @@ export const camposFormulario = [
     type: 'text',
     label: 'Razão Social',
     name: 'razao_social',
-    width: '100%',
+    width: '85%',
   },
   {
     type: 'text',
@@ -233,17 +233,7 @@ export const camposFiltro = [
   {
     type: 'text',
     label: 'Código',
-    name: 'codigo',
-  },
-  {
-    type: 'select',
-    label: 'Tipo',
-    name: 'tipo',
-    options: [
-      { label: 'Industria', value: 1 },
-      { label: 'EAS', value: 2 },
-      { label: 'Laboratório', value: 3 },
-    ],
+    name: 'id_cliente',
   },
   {
     type: 'text',
@@ -258,11 +248,11 @@ export const camposFiltro = [
   {
     type: 'text',
     label: 'CNPJ/CPF',
-    name: 'cnpj',
+    name: 'cnpj_cpf',
   },
   {
     type: 'text',
-    label: 'Endereço',
-    name: 'endereco',
+    label: 'Cidade',
+    name: 'cidade',
   },
 ];
