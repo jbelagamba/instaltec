@@ -1,16 +1,20 @@
+import React, { useContext } from 'react';
 import { Form, Input, Select, Button, Divider } from 'antd';
-import axios from 'axios';
 import { camposFormulario } from '../../constants';
+
+import { LocaisContext } from '../../../../context/Locais';
+
 const { Option } = Select;
 const { TextArea } = Input;
 
 function FormCliente({ form, acao, cadastrar, editar, loading }) {
-  const consultaCep = async (cep) => {
+  const { locais, setLocais, buscaCidadesPorEstado, buscaCEP } =
+    useContext(LocaisContext);
+
+  const onChangeCep = async (cep) => {
     if (cep) {
       try {
-        const { data } = await axios.get(
-          `https://viacep.com.br/ws/${cep}/json`
-        );
+        const data = await buscaCEP(cep);
 
         const { logradouro, bairro, localidade, uf } = data;
 
@@ -26,6 +30,19 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
     }
   };
 
+  const onChangeEstado = async (estado) => {
+    if (estado) {
+      try {
+        const data = await buscaCidadesPorEstado(estado);
+        setLocais({ estado: locais.estado, cidade: data });
+
+        form.setFieldsValue({ cidade: data[0]?.value });
+      } catch (error) {
+        console.log('catch error', error);
+      }
+    }
+  };
+
   return (
     <Form
       form={form}
@@ -35,7 +52,7 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
       }
       layout="vertical"
     >
-      {camposFormulario.map(({ type, label, name, options, width }, index) => (
+      {camposFormulario.map(({ type, label, name, width }, index) => (
         <Form.Item
           key={index}
           label={label}
@@ -47,8 +64,13 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
           }}
         >
           {type === 'select' ? (
-            <Select placeholder="Selecione" optionFilterProp="label" showSearch>
-              {options.map(({ label, value }, index) => (
+            <Select
+              placeholder="Selecione"
+              optionFilterProp="label"
+              showSearch
+              onChange={(value) => name == 'estado' && onChangeEstado(value)}
+            >
+              {locais[name]?.map(({ label, value }, index) => (
                 <Option value={value} label={label} key={index}>
                   {label}
                 </Option>
@@ -60,7 +82,7 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
             <Input
               type={type}
               placeholder={label}
-              onBlur={(e) => name === 'cep' && consultaCep(e.target.value)}
+              onBlur={(e) => name === 'cep' && onChangeCep(e.target.value)}
             />
           )}
         </Form.Item>
