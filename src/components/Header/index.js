@@ -40,7 +40,7 @@ function Header() {
           <Menu.Item key="/clientes" icon={<ContactsOutlined />}>
             <Link to="/clientes">Clientes</Link>
           </Menu.Item>
-          <Menu.Item key="/tarefas" icon={<CheckCircleOutlined />}>
+          {/*<Menu.Item key="/tarefas" icon={<CheckCircleOutlined />}>
             <Link to="/tarefas">Tarefas</Link>
           </Menu.Item>
           <Menu.Item key="/orcamentos" icon={<DollarCircleOutlined />}>
@@ -48,7 +48,7 @@ function Header() {
           </Menu.Item>
           <Menu.Item key="/pedido" icon={<DollarCircleOutlined />}>
             <Link to="/pedido">Pedido</Link>
-          </Menu.Item>
+          </Menu.Item>*/}
         </Menu>
       )}
     </>

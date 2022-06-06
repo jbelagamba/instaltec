@@ -52,7 +52,7 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
       }
       layout="vertical"
     >
-      {camposFormulario.map(({ type, label, name, width }, index) => (
+      {camposFormulario.map(({ type, label, name, options, width }, index) => (
         <Form.Item
           key={index}
           label={label}
@@ -70,11 +70,17 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
               showSearch
               onChange={(value) => name == 'estado' && onChangeEstado(value)}
             >
-              {locais[name]?.map(({ label, value }, index) => (
-                <Option value={value} label={label} key={index}>
-                  {label}
-                </Option>
-              ))}
+              {name == 'tipo'
+                ? options?.map(({ label, value }, index) => (
+                    <Option value={value} label={label} key={index}>
+                      {label}
+                    </Option>
+                  ))
+                : locais[name]?.map(({ label, value }, index) => (
+                    <Option value={value} label={label} key={index}>
+                      {label}
+                    </Option>
+                  ))}
             </Select>
           ) : type === 'textarea' ? (
             <TextArea />
