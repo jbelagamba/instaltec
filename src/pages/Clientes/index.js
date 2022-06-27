@@ -217,7 +217,7 @@ function Clientes() {
             type="danger"
             icon={<PlusOutlined />}
             onClick={() => {
-              formCliente.resetFields();
+              //formCliente.resetFields();
               setModalCadastro('cadastroCliente');
             }}
           >

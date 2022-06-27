@@ -100,7 +100,22 @@ function FormCliente({ form, acao, cadastrar, editar, loading }) {
         <Button type="danger" htmlType="submit" loading={loading}>
           {acao === 'edicao' ? 'Salvar alterações' : 'Cadastrar cliente'}
         </Button>
+
+        <Button type="warning"
+          style={{
+            display: 'inline-block',
+            marginLeft: '5px',
+          }}
+
+          onClick={() => {
+            form.resetFields();
+          }}
+        >
+           Limpar
+        </Button>
       </Form.Item>
+
+
     </Form>
   );
 }

@@ -77,7 +77,7 @@ export const camposFormulario = [
     type: 'text',
     label: 'Razão Social',
     name: 'razao_social',
-    width: '85%',
+    width: '100%',
   },
   {
     type: 'text',
