@@ -97,13 +97,13 @@ export const camposFormulario = [
     width: '50%',
   },
   {
-    type: 'number',
+    type: 'text',
     label: 'CNPJ/CPF',
     name: 'cnpj_cpf',
     width: '50%',
   },
   {
-    type: 'number',
+    type: 'text',
     label: 'Telefone empresa',
     name: 'telefone',
     width: '50%',
@@ -121,7 +121,7 @@ export const camposFormulario = [
     width: '33.333%',
   },
   {
-    type: 'number',
+    type: 'text',
     label: 'Telefone do contato tecnico',
     name: 'tecnico_telefone',
     width: '33.333%',
@@ -139,7 +139,7 @@ export const camposFormulario = [
     width: '33.333%',
   },
   {
-    type: 'number',
+    type: 'text',
     label: 'Telefone do financeiro',
     name: 'financeiro_telefone',
     width: '33.333%',
